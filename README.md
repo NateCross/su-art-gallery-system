@@ -7,6 +7,10 @@ This system is an art gallery for Fine Arts students to share and display their 
 - Clone this repository
 - `composer install`
 - `npm install --include=dev`
+- `php artisan migrate`
+  - **Note:** Make sure MySQL is running and the .env file is setup
+- `php artisan storage:link`
+  - This enables the public folder to serve images
 
 ### Testing
 

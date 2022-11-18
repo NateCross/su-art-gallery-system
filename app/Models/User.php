@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the artworks attached to a user
+     */
+    public function artworks()
+    {
+        return $this->belongsToMany(Artwork::class);
+    }
 }
