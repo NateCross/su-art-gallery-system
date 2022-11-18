@@ -1,3 +1,21 @@
+# Art Gallery System
+
+This system is an art gallery for Fine Arts students to share and display their works.
+
+## Developing
+
+- Clone this repository
+- `composer install`
+- `npm install --include=dev`
+
+### Testing
+
+- `npm run dev` and `php artisan serve`
+- Make sure both commands are running
+- Go to the link indicated in `php artisan serve`
+
+# Original Readme Follows
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
