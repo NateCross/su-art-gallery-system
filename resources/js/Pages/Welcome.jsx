@@ -47,6 +47,11 @@ export default function Welcome(props) {
           </h1>
         )
       }
+
+      <Link
+        href='/artworks'
+        className='btn btn-primary'
+      >Artworks</Link>
     </>
   );
 }

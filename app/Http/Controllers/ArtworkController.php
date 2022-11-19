@@ -4,10 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Artwork;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ArtworkController extends Controller
 {
+    /**
+     * This function declares the middleware.
+     * Very important so that only certain routes are
+     * restricted
+     */
+    public function __construct()
+    {
+        $this->middleware(
+            ['auth', 'verified'], 
+            ['except' => ['index', 'show']],
+            // ['only' => ['store', 'create', 'edit', 'update']],
+        );
+    }
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +80,11 @@ class ArtworkController extends Controller
      */
     public function show(Artwork $artwork)
     {
-        //
+
+        $artwork->users;    // Gets the users first before returning
+        return Inertia::render('Artworks/Show', [
+            'artwork' => $artwork,
+        ]);
     }
 
     /**
@@ -77,7 +95,10 @@ class ArtworkController extends Controller
      */
     public function edit(Artwork $artwork)
     {
-        //
+        $artwork->users;
+        return Inertia::render('Artworks/Edit', [
+            'artwork' => $artwork,
+        ]);
     }
 
     /**
@@ -89,7 +110,27 @@ class ArtworkController extends Controller
      */
     public function update(Request $request, Artwork $artwork)
     {
-        //
+        $validatedData = $request->validate([
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'title' => ['required'],
+            'date' => ['required'],
+            'description' => ['nullable'],
+            'alt_text' => ['nullable'],
+        ]);
+
+        // Only delete and add the new image if an image
+        // is uploaded
+        if ($request->hasFile('image')) {
+            Storage::delete($artwork->path);
+
+            $path = $request->file('image')->store('public/artworks');
+
+            $validatedData['path'] = $path;
+        }
+
+        $artwork->update($validatedData);
+
+        return($this->show($artwork));
     }
 
     /**
@@ -100,6 +141,10 @@ class ArtworkController extends Controller
      */
     public function destroy(Artwork $artwork)
     {
-        //
+        Storage::delete($artwork->path);
+        $artwork->delete();
+        return $this->index();
+        // Artwork::truncate();
+        // $artwork->delete();
     }
 }

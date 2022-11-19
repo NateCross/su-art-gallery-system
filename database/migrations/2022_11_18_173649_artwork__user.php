@@ -15,8 +15,14 @@ return new class extends Migration
     {
         Schema::create('artwork_user', function (Blueprint $table) {
             $table->id();
-            $table->integer('artwork_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->foreignId('artwork_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 

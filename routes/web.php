@@ -40,8 +40,6 @@ Route::middleware('auth')->group(function () {
 /**
  * Defining Artwork routes
  */
-Route::resource('artworks', ArtworkController::class)
-    ->only(['index', 'store', 'create'])
-    ->middleware(['auth', 'verified']);
+Route::resource('artworks', ArtworkController::class);
 
 require __DIR__.'/auth.php';
