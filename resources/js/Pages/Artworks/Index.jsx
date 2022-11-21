@@ -1,6 +1,7 @@
 import React from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
+// import { useForm } from '@inertiajs/inertia';
 
 function Artwork({ data }) {
   return (
@@ -30,6 +31,7 @@ function Pagination({ links, page }) {
           className={`
             btn
             ${page === index ? 'btn-active' : ''}
+            ${index === 0 || index === links.length - 1 ? 'mx-5' : ''}
           `}
         >{link?.label}</Link>
       ))}
@@ -37,7 +39,31 @@ function Pagination({ links, page }) {
   )
 }
 
-export default function Index({ auth, artworks }) {
+function Search() {
+  const { data, setData, post, processing, errors } = useForm({
+    search: '',
+  });
+
+  function submit(e) {
+    e.preventDefault();
+    post(route('artworks.search'));
+  }
+
+  return (
+    <form onSubmit={submit}>
+      <input 
+        type="text" 
+        id='search' 
+        placeholder='Search' 
+        className='input input-bordered input-primary'
+        value={data?.search}
+        onChange={(e) => {setData('search', e.target.value)}}
+      />
+    </form>
+  )
+}
+
+export default function Index({ auth, artworks, query }) {
   console.log(artworks);
   return (
     <>
@@ -45,6 +71,7 @@ export default function Index({ auth, artworks }) {
       <Head title="Artworks" />
 
       <h1>Artworks</h1>
+      <Search />
       <Link
         className={`
           btn btn-primary ${!auth?.user ? 'invisible' : ''}

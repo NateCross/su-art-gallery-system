@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artwork;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -18,19 +19,45 @@ class ArtworkController extends Controller
     {
         $this->middleware(
             ['auth', 'verified'], 
-            ['except' => ['index', 'show']],
+            ['except' => ['index', 'show', 'search']],
             // ['only' => ['store', 'create', 'edit', 'update']],
         );
     }
     /**
      * Display a listing of the resource.
+     * Also displays searched artworks.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $validatedData = $request->validate([
+            'query' => ['nullable'],
+            'queryParams' => ['nullable'],
+            'page' => ['nullable'],
+        ]);
+
+        // if ($validatedData['search']) {
+        //     return $request;
+        // } else {
+        // }
+
+        // $req
+        // $artworks = null;
+
+        // if ($request) {
+        //     $request->whenHas('search', function($input) {
+        //         return $input;
+        //     }, function() {
+        //         $artworks = Artwork::with('users')->latest()->paginate(15);
+        //     });
+        // } else {
+        //     $artworks = Artwork::with('users')->latest()->paginate(15);
+        // }
+        $artworks = Artwork::with('users')->latest()->paginate(15);
+
         return Inertia::render('Artworks/Index', [
-            'artworks' => Artwork::with('users')->latest()->paginate(15),
+            'artworks' => $artworks,
         ]);
     }
 
@@ -55,7 +82,7 @@ class ArtworkController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
             'date' => ['required'],
             'description' => ['nullable'],
@@ -64,12 +91,18 @@ class ArtworkController extends Controller
 
         $path = $request->file('image')->store('public/artworks');
 
+        // return(getimagesize($request->file('image')));
+        [$width, $height] = getimagesize($request->file('image'));
+
         $validatedData['path'] = $path;
+        $validatedData['width'] = $width;
+        $validatedData['height'] = $height;
 
         $art = Artwork::create($validatedData);
         $art->users()->attach($request->user()->id);
 
-        return $this->index();
+        // return $this->index();
+        return redirect()->route('artworks.index');
     }
 
     /**
@@ -95,7 +128,7 @@ class ArtworkController extends Controller
      */
     public function edit(Artwork $artwork)
     {
-        $artwork->users;
+        $artwork->users;    // Gets the users first before returning
         return Inertia::render('Artworks/Edit', [
             'artwork' => $artwork,
         ]);
@@ -111,7 +144,7 @@ class ArtworkController extends Controller
     public function update(Request $request, Artwork $artwork)
     {
         $validatedData = $request->validate([
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
             'date' => ['required'],
             'description' => ['nullable'],
@@ -143,8 +176,32 @@ class ArtworkController extends Controller
     {
         Storage::delete($artwork->path);
         $artwork->delete();
-        return $this->index();
-        // Artwork::truncate();
-        // $artwork->delete();
+        return redirect()->route('artworks.index');
+    }
+
+    /**
+     * Search for an artwork by title, author, tags
+     * TODO: Implement tags
+     */
+    public function search(Request $request)
+    {
+        $input = $request->validate([
+            'search' => ['nullable'],
+        ]);
+
+        if (empty($input)) {
+            return redirect()->route('artworks.index');
+        }
+
+        // Adapts query for LIKE
+        $query = '%' . $input['search'] . '%';
+
+        $results = Artwork::query()
+            ->with('users')
+            ->latest()
+            ->where('title', 'LIKE', $query)
+            ->paginate(15);
+        // dd($results);
+        // return $this->index($results);
     }
 }

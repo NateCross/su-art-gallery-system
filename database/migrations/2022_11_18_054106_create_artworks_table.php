@@ -17,8 +17,15 @@ return new class extends Migration
         Schema::create('artworks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+
             // This path is where the artwork is stored on disk
             $table->string('path');
+
+            // We get the width and height
+            // to preload image size in React
+            $table->integer('width');
+            $table->integer('height');
+
             $table->string('alt_text')->nullable();
             $table->string('description')->nullable();
             $table->date('date');

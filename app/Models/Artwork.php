@@ -15,6 +15,8 @@ class Artwork extends Model
         'date',
         'description',
         'alt_text',
+        'width',
+        'height',
     ];
 
     /**
@@ -23,5 +25,13 @@ class Artwork extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Get the tags of this artwork
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

@@ -41,5 +41,10 @@ Route::middleware('auth')->group(function () {
  * Defining Artwork routes
  */
 Route::resource('artworks', ArtworkController::class);
+Route::controller(ArtworkController::class)
+    ->prefix('artworks')
+    ->group(function() {
+        Route::post('search', 'search')->name('artworks.search');
+    });
 
 require __DIR__.'/auth.php';

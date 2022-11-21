@@ -11,6 +11,7 @@ This system is an art gallery for Fine Arts students to share and display their 
   - **Note:** Make sure MySQL is running and the .env file is setup
 - `php artisan storage:link`
   - This enables the public folder to serve images
+- **To increase file upload size, change `upload_max_filesize` in `php.ini` to something like `10M`**
 
 ### Testing
 

@@ -12,6 +12,8 @@ export default function Show({ auth, artwork }) {
     <>
       <img
         src={getImageFromDisk(artwork?.path)}
+        width={artwork?.width}
+        height={artwork?.height}
       />
 
       {isArtist && (

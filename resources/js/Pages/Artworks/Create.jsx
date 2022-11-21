@@ -41,6 +41,7 @@ export default function Create({ auth }) {
           {data.image && (
             <img src={URL.createObjectURL(data.image)}/>
           )}
+          <InputError message={errors.image} className="mt-2" />
 
           <label htmlFor="title">Title</label>
           <input 
@@ -49,6 +50,7 @@ export default function Create({ auth }) {
             id="title" 
             onChange={e => setData('title', e.target.value)}
           />
+          <InputError message={errors.title} className="mt-2" />
 
           <label htmlFor="date">Date</label>
           <input 
@@ -58,6 +60,7 @@ export default function Create({ auth }) {
             id="date" 
             onChange={e => setData('date', e.target.value)}
           />
+          <InputError message={errors.date} className="mt-2" />
 
           <textarea
             value={data.description}
