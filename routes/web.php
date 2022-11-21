@@ -44,7 +44,8 @@ Route::resource('artworks', ArtworkController::class);
 Route::controller(ArtworkController::class)
     ->prefix('artworks')
     ->group(function() {
-        Route::post('search', 'search')->name('artworks.search');
+        // Route::post('dd', 'test_route')->name('artworks.dd'); // Route for testing
+        // Route::post('search', 'search')->name('artworks.search');
     });
 
 require __DIR__.'/auth.php';

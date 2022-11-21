@@ -1,6 +1,7 @@
 import React from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import InputError from '@/Components/InputError';
 // import { useForm } from '@inertiajs/inertia';
 
 function Artwork({ data }) {
@@ -40,37 +41,66 @@ function Pagination({ links, page }) {
 }
 
 function Search() {
-  const { data, setData, post, processing, errors } = useForm({
+  const { data, setData, processing, errors, get } = useForm({
     search: '',
+    option: 'Title',
   });
 
   function submit(e) {
     e.preventDefault();
-    post(route('artworks.search'));
+    get(route('artworks.index'));
   }
+
+  const searchOptions = [
+    'Title',
+    'Artist',
+    'Tag',
+  ];
 
   return (
     <form onSubmit={submit}>
       <input 
-        type="text" 
+        type="search" 
         id='search' 
         placeholder='Search' 
         className='input input-bordered input-primary'
         value={data?.search}
         onChange={(e) => {setData('search', e.target.value)}}
       />
+      <InputError message={errors.search}/>
+
+      <select 
+        required
+        name='option'
+        className='select select-secondary'
+        value={data?.option}
+        onChange={(e) => {setData('option', e.target.value)}}
+      >
+        {searchOptions.map((value) => (
+          <option key={value}>{value}</option>
+        ))}
+      </select>
+      <InputError message={errors.option}/>
     </form>
   )
 }
 
-export default function Index({ auth, artworks, query }) {
+export default function Index({ auth, artworks }) {
   console.log(artworks);
+  const searchParams = new URLSearchParams(window.location.search);
+  const searchQuery = searchParams.get('search');
+
   return (
     <>
       { /* <AuthenticatedLayout auth={auth}> */ }
       <Head title="Artworks" />
 
-      <h1>Artworks</h1>
+      {searchQuery ? (
+        <h1>Searching for {searchQuery}</h1>
+      ) : (
+        <h1>Artworks</h1>
+      )}
+
       <Search />
       <Link
         className={`

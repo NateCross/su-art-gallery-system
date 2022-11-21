@@ -15,10 +15,10 @@ export default function Edit({ auth, artwork }) {
     errors,
     progress,
   } = useForm({
-    title: '',
-    description: '',
+    title: artwork?.title || '',
+    description: artwork?.description || '',
     image: null,
-    date: '',
+    date: artwork?.date || '',
   });
 
   // We use an input ref so we can manually reset file input
@@ -59,6 +59,7 @@ export default function Edit({ auth, artwork }) {
               URL.createObjectURL(data.image)
             ) : getImageFromDisk(artwork.path)}
           />
+          <InputError message={errors.image} className="mt-2" />
 
           <label htmlFor="title">Title</label>
           <input
@@ -68,6 +69,7 @@ export default function Edit({ auth, artwork }) {
             onChange={e => setData('title', e.target.value)}
             className='input input-bordered'
           />
+          <InputError message={errors.title} className="mt-2" />
 
           <label htmlFor="date">Date</label>
           <input
@@ -77,6 +79,7 @@ export default function Edit({ auth, artwork }) {
             id="date"
             onChange={e => setData('date', e.target.value)}
           />
+          <InputError message={errors.date} className="mt-2" />
 
           <textarea
             value={data.description}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artwork;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -32,10 +33,40 @@ class ArtworkController extends Controller
     public function index(Request $request)
     {
         $validatedData = $request->validate([
-            'query' => ['nullable'],
-            'queryParams' => ['nullable'],
-            'page' => ['nullable'],
+            'search' => ['nullable'],
+            'option' => ['nullable'],
         ]);
+
+        if (!array_key_exists('search', $validatedData)) {
+            $artworks = Artwork::with('users')->latest()->paginate(15);
+        } else {
+            $search = '%' . $validatedData['search'] . '%';
+
+            $option = strtolower($validatedData['option']);
+            if ($option == 'title') {
+                $artworks = Artwork::query()
+                    ->with('users')
+                    ->latest()
+                    ->where('title', 'LIKE', $search)
+                    ->paginate(15)
+                    ->appends($validatedData);
+            } elseif ($option == 'artist') {
+                // TODO: Fix
+                // Actually, we need to separate this
+                // to show its own page
+                $artworks = User::query()
+                    ->where('name', 'LIKE', $search)
+                    ->artworks()
+                    ->with('users')
+                    ->latest();
+            }
+            // dd($artworks);
+        }
+
+        return Inertia::render('Artworks/Index', [
+            'artworks' => $artworks,
+        ]);
+
 
         // if ($validatedData['search']) {
         //     return $request;
@@ -54,11 +85,11 @@ class ArtworkController extends Controller
         // } else {
         //     $artworks = Artwork::with('users')->latest()->paginate(15);
         // }
-        $artworks = Artwork::with('users')->latest()->paginate(15);
+        // $artworks = Artwork::with('users')->latest()->paginate(15);
 
-        return Inertia::render('Artworks/Index', [
-            'artworks' => $artworks,
-        ]);
+        // return Inertia::render('Artworks/Index', [
+        //     'artworks' => $artworks,
+        // ]);
     }
 
     /**
@@ -163,7 +194,8 @@ class ArtworkController extends Controller
 
         $artwork->update($validatedData);
 
-        return($this->show($artwork));
+        // return($this->show($artwork));
+        return redirect()->route('artworks.show', $artwork);
     }
 
     /**
@@ -179,29 +211,34 @@ class ArtworkController extends Controller
         return redirect()->route('artworks.index');
     }
 
+    public function test_route(Request $request)
+    {
+        dd($request);
+    }
+
     /**
      * Search for an artwork by title, author, tags
      * TODO: Implement tags
      */
-    public function search(Request $request)
-    {
-        $input = $request->validate([
-            'search' => ['nullable'],
-        ]);
+    // public function search(Request $request)
+    // {
+    //     $input = $request->validate([
+    //         'search' => ['nullable'],
+    //     ]);
 
-        if (empty($input)) {
-            return redirect()->route('artworks.index');
-        }
+    //     if (empty($input)) {
+    //         return redirect()->route('artworks.index');
+    //     }
 
-        // Adapts query for LIKE
-        $query = '%' . $input['search'] . '%';
+    //     // Adapts query for LIKE
+    //     $query = '%' . $input['search'] . '%';
 
-        $results = Artwork::query()
-            ->with('users')
-            ->latest()
-            ->where('title', 'LIKE', $query)
-            ->paginate(15);
-        // dd($results);
-        // return $this->index($results);
-    }
+    //     $results = Artwork::query()
+    //         ->with('users')
+    //         ->latest()
+    //         ->where('title', 'LIKE', $query)
+    //         ->paginate(15);
+    //     dd($results);
+    //     // return $this->index($results);
+    // }
 }
