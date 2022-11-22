@@ -48,6 +48,10 @@ class User extends Authenticatable
      */
     public function artworks()
     {
-        return $this->belongsToMany(Artwork::class);
+        return $this
+            ->belongsToMany(Artwork::class)
+            ->with('users')
+            ->latest()
+            ->paginate(15);
     }
 }

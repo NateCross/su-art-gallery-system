@@ -52,4 +52,17 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    public function show(User $user)
+    {
+        // $artist = $user
+            // ->with(['artworks' => function($query) {
+            //     $query->latest()->paginate(15);
+            // }])->firstOrFail();
+
+        return Inertia::render('Artists/Show', [
+            'artist' => $user,
+            'artworks' => $user->artworks(),
+        ]);
+    }
 }

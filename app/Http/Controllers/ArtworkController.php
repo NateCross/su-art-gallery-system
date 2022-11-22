@@ -38,14 +38,13 @@ class ArtworkController extends Controller
         ]);
 
         if (!array_key_exists('search', $validatedData)) {
-            $artworks = Artwork::with('users')->latest()->paginate(15);
+            $artworks = Artwork::latest()->paginate(15);
         } else {
             $search = '%' . $validatedData['search'] . '%';
 
             $option = strtolower($validatedData['option']);
             if ($option == 'title') {
                 $artworks = Artwork::query()
-                    ->with('users')
                     ->latest()
                     ->where('title', 'LIKE', $search)
                     ->paginate(15)

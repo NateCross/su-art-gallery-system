@@ -9,6 +9,11 @@ class Artwork extends Model
 {
     use HasFactory;
 
+    // Eager loads the relations automatically
+    protected $with = [
+        'users',
+    ];
+
     protected $fillable = [
         'title',
         'path',

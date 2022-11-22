@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link, Head } from '@inertiajs/inertia-react';
+import Header from '../Components/Header';
 
 export default function Welcome(props) {
   return (
     <>
       <Head title="Welcome" />
-      <div className="fixed top-0 right-0 px-6 py-4 sm:block">
+      <Header auth={props.auth} />
+      {/* <div className="fixed top-0 right-0 px-6 py-4 sm:block">
         {props.auth.user ? (
           <Link href={route('dashboard')} className="text-sm text-gray-700 dark:text-gray-500 underline">
             Dashboard
@@ -24,7 +26,7 @@ export default function Welcome(props) {
             </Link>
           </>
         )}
-      </div>
+      </div> */}
 
       { /* This is mainly to test the display of user */ }
       { props?.auth?.user ? (
