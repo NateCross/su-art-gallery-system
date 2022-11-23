@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link, Head } from '@inertiajs/inertia-react';
-import Header from '../Components/Header';
 
-export default function Welcome(props) {
+function Welcome(props) {
   return (
     <>
       <Head title="Welcome" />
-      <Header auth={props.auth} />
+      {/* <Header auth={props.auth} /> */}
       {/* <div className="fixed top-0 right-0 px-6 py-4 sm:block">
         {props.auth.user ? (
           <Link href={route('dashboard')} className="text-sm text-gray-700 dark:text-gray-500 underline">
@@ -57,3 +56,7 @@ export default function Welcome(props) {
     </>
   );
 }
+
+// Welcome.layout = page => <Header children={page} />
+
+export default Welcome;

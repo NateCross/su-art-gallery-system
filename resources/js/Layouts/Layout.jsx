@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { usePage } from '@inertiajs/inertia-react';
 
 function LogoLink() {
   return (
@@ -21,15 +22,63 @@ function LogoLink() {
   )
 }
 
+function NavLink({ name, routeLink, isActive }) {
+  const styles = isActive ? `
+    text-primary
+    hover:text-primary-focus
+  ` : `
+  `;
+  return (
+    <li>
+      <Link
+        href={route(routeLink)}
+        className={`
+          transition-all
+          btn
+          btn-ghost
+          ${styles}
+        `}
+      >
+        {name}
+      </Link>
+    </li>
+  )
+}
+
+const Links = [
+  {
+    name: 'Home',
+    link: 'home',
+  },
+  {
+    name: 'Artworks',
+    link: 'artworks.index',
+  }
+]
+
 function Navbar() {
   return (
-    <div className='navbar-center'>
+    <ul className='
+      navbar-center
+      items-center
 
-    </div>
+      hidden
+      sm:flex
+    '>
+      {Links.map((item) => (
+        <NavLink
+          name={item.name}
+          routeLink={item.link}
+          isActive={route().current(item.link)}
+          key={item.name}
+        />
+      ))}
+    </ul>
   )
 }
 
 function Dropdown({ auth }) {
+  if (!auth?.user) return null;
   return (
     <div className="dropdown dropdown-end hidden sm:inline-block">
       <label 
@@ -38,6 +87,7 @@ function Dropdown({ auth }) {
           btn 
           btn-ghost 
           rounded-btn 
+          text-xl
           focus:text-primary
       ">
         {auth?.user?.name}
@@ -123,6 +173,35 @@ function Search() {
   )
 }
 
+function LoginLogout({ auth }) {
+  if (auth?.user) return null;
+  
+  return <>
+    <Link
+      href={route('login')}
+      className='
+        btn 
+        btn-ghost 
+        uppercase
+        text-xl
+      '
+    >
+      Login
+    </Link>
+    <Link
+      href={route('register')}
+      className='
+        btn 
+        btn-ghost 
+        uppercase
+        text-xl
+      '
+    >
+      Register
+    </Link>
+  </>
+}
+
 function HeaderEnd({ auth }) {
   return (
     <div className="
@@ -130,13 +209,17 @@ function HeaderEnd({ auth }) {
       gap-2 
     ">
       <Dropdown auth={auth} />
+      <LoginLogout auth={auth} />
       <Search />
+
     </div>
   )
 }
 
-export default function Header({ auth }) {
-  return (
+export default function Header({ children }) {
+  const { auth } = usePage().props;
+
+  return <>
     <header
       className='
         navbar
@@ -147,5 +230,8 @@ export default function Header({ auth }) {
       <Navbar />
       <HeaderEnd auth={auth} />
     </header>
-  )
+    <main>
+      {children}
+    </main>
+  </>
 }

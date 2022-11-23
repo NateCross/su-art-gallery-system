@@ -1,5 +1,4 @@
 import React from 'react'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import InputError from '@/Components/InputError';
 import { Artwork } from '../../Components/Artwork';
@@ -57,7 +56,6 @@ export default function Index({ auth, artworks }) {
 
   return (
     <>
-      { /* <AuthenticatedLayout auth={auth}> */ }
       <Head title="Artworks" />
 
       {searchQuery ? (
@@ -83,7 +81,6 @@ export default function Index({ auth, artworks }) {
       <div className='btn-group'>
         <Pagination links={artworks?.links} page={artworks?.current_page} />
       </div>
-      { /* </AuthenticatedLayout> */ }
     </>
   )
 }
