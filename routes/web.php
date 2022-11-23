@@ -64,6 +64,7 @@ Route::controller(SearchController::class)
     ->prefix('search')
     ->group(function() {
         Route::get('artworks', 'artworks')->name('search.artworks');
+        Route::get('artists', 'artists')->name('search.artists');
     });
 
 require __DIR__.'/auth.php';

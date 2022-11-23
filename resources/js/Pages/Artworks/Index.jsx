@@ -19,7 +19,6 @@ export default function Index({ auth, artworks }) {
         <h1>Artworks</h1>
       )}
 
-      <Search />
       <Link
         className={`
           btn btn-primary ${!auth?.user ? 'invisible' : ''}

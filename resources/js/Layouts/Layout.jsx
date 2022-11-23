@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
 
@@ -87,14 +87,12 @@ function Dropdown({ auth }) {
         className="
           btn 
           btn-ghost 
-          rounded-btn 
+          btn-circle
           text-xl
           focus:text-primary
       ">
-        {auth?.user?.name}
         <FontAwesomeIcon 
-          icon={faCaretDown} 
-          className='ml-2'
+          icon={faBars} 
         />
       </label>
       <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-52 mt-4">
@@ -208,9 +206,9 @@ function HeaderEnd({ auth }) {
       navbar-end 
       gap-2 
     ">
+      <Search />
       <Dropdown auth={auth} />
       <LoginLogout auth={auth} />
-      <Search />
 
     </div>
   )

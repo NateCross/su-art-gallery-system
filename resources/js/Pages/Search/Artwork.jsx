@@ -10,8 +10,17 @@ function NoArtworksMessage() {
 
 export default function Artwork({ artworks }) {
   console.log(artworks);
+  const searchParams = new URLSearchParams(window.location.search);
+  const searchQuery = searchParams.get('search');
   return <>
-    <h1>Hi</h1>
+    <h1
+      className='
+        text-3xl
+        font-bold
+      '
+    >
+      Search: {searchQuery}
+    </h1>
 
     <ul>
       {artworks.data.map((data) => (
