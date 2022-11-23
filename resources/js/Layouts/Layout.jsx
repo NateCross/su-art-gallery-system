@@ -3,6 +3,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
+import { Search } from '../Components/Search';
 
 function LogoLink() {
   return (
@@ -135,43 +136,42 @@ function Hamburger({ auth }) {
   )
 }
 
-function Search() {
-  return (
-    <form
-      className='relative hidden sm:block'
-    >
-      <input 
-        type="search" 
-        name="search" 
-        id="search" 
-        placeholder="Search"
-        results
-        className="
-          input 
-          input-bordered
-          w-full
-          max-w-xs
-        "
-      />
-      <button 
-        type="submit"
-        className='
-          absolute
-          inset-y-0
-          right-0
-          flex
-          items-center
-          pr-3
-          transition-all
-          hover:text-primary
-          focus:text-primary
-        '
-      >
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
-      </button>
-    </form>
-  )
-}
+// function Search() {
+//   return (
+//     <form
+//       className='relative hidden sm:block'
+//     >
+//       <input 
+//         type="search" 
+//         name="search" 
+//         id="search" 
+//         placeholder="Search"
+//         className="
+//           input 
+//           input-bordered
+//           w-full
+//           max-w-xs
+//         "
+//       />
+//       <button 
+//         type="submit"
+//         className='
+//           absolute
+//           inset-y-0
+//           right-0
+//           flex
+//           items-center
+//           pr-3
+//           transition-all
+//           hover:text-primary
+//           focus:text-primary
+//         '
+//       >
+//         <FontAwesomeIcon icon={faMagnifyingGlass} />
+//       </button>
+//     </form>
+//   )
+// }
 
 function LoginLogout({ auth }) {
   if (auth?.user) return null;

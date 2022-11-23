@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,6 +54,16 @@ Route::controller(ArtworkController::class)
     ->group(function() {
         // Route::post('dd', 'test_route')->name('artworks.dd'); // Route for testing
         // Route::post('search', 'search')->name('artworks.search');
+    });
+
+
+/**
+ * Defining Search routes
+ */
+Route::controller(SearchController::class)
+    ->prefix('search')
+    ->group(function() {
+        Route::get('artworks', 'artworks')->name('search.artworks');
     });
 
 require __DIR__.'/auth.php';
