@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head } from '@inertiajs/inertia-react';
@@ -19,10 +19,13 @@ export default function Edit({ auth, artwork }) {
     description: artwork?.description || '',
     image: null,
     date: artwork?.date || '',
+    tags: [],
   });
 
   // We use an input ref so we can manually reset file input
   const fileInputRef = useRef(null);
+
+  const [tagInput, setTagInput] = useState('');
 
   console.log(artwork);
 
@@ -31,6 +34,21 @@ export default function Edit({ auth, artwork }) {
     e.preventDefault();
     patch(route('artworks.update', artwork.id), { onSuccess: () => reset() });
   };
+
+  const addTag = (e) => {
+    e.preventDefault();
+
+    if (data.tags.includes(tagInput)) return;
+
+    setData('tags', [...data.tags, tagInput]);
+    setTagInput('');
+  }
+
+  const removeTag = (e) => {
+    setData('tags', data.tags.filter((tag) => (
+      tag !== e.target.value
+    )));
+  }
 
   return (
     <>
@@ -88,19 +106,63 @@ export default function Edit({ auth, artwork }) {
             onChange={e => setData('description', e.target.value)}
           ></textarea>
           <InputError message={errors.description} className="mt-2" />
+
+
           <PrimaryButton className="mt-4" processing={processing}>Edit Artwork</PrimaryButton>
 
         </form>
 
-        <button
+        { /* Tags form */ }
+        <form
+          onSubmit={addTag}
+        >
+          <label htmlFor="">Tags</label>
+          <input 
+            type="text" 
+            id='tag'
+            name='tag'
+            value={tagInput}
+            onChange={(e) => { setTagInput(e.target.value) }}
+          />
+          <button 
+            type="submit"
+            className='
+              btn
+              btn-rounded
+            '
+          >
+            Add Tag
+          </button>
+        </form>
+
+        { /* Tag output */ }
+        <output>
+          {data.tags.map((tag) => (
+            <button 
+              className="
+                badge
+              "
+              key={tag}
+              onClick={removeTag}
+              value={tag}
+            >
+              {tag}
+            </button>
+          ))}
+        </output>
+
+        {/* <button
           onClick={() => {
             reset();
             fileInputRef.current.value = null;
+
+            setTagInput('');
+            setData('tags', []);
           }}
           className='btn'
         >
           Reset Fields
-        </button>
+        </button> */}
       </div>
     </>
   )
