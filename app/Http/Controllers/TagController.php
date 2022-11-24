@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TagController extends Controller
 {
@@ -46,7 +47,10 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        return Inertia::render('Tags/Show', [
+            'tag' => $tag,
+            'artworks' => $tag ->artworks(),
+        ]);
     }
 
     /**

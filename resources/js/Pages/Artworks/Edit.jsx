@@ -19,7 +19,9 @@ export default function Edit({ auth, artwork }) {
     description: artwork?.description || '',
     image: null,
     date: artwork?.date || '',
-    tags: [],
+    tags: artwork?.tags.map((tag) => (
+      tag?.name
+    )) || [],
   });
 
   // We use an input ref so we can manually reset file input

@@ -15,6 +15,9 @@ class Tag extends Model
 
     public function artworks()
     {
-        return $this->belongsToMany(Artwork::class);
+        return $this
+            ->belongsToMany(Artwork::class)
+            ->latest()
+            ->paginate(15);
     }
 }

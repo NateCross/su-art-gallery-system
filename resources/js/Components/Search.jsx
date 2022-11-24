@@ -67,12 +67,13 @@ export function Search() {
 
     <form 
       onSubmit={submit}
-      className='relative hidden sm:inline-flex input-group'
+      className='relative hidden sm:inline-flex input-group gap-px'
     >
       <input
         type="search"
         id='search'
         placeholder='Search'
+        required
         className='
           input 
           input-bordered 

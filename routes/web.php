@@ -4,6 +4,8 @@ use App\Http\Controllers\ArtworkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TagController;
+use App\Models\Tag;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -66,5 +68,11 @@ Route::controller(SearchController::class)
         Route::get('artworks', 'artworks')->name('search.artworks');
         Route::get('artists', 'artists')->name('search.artists');
     });
+
+/**
+ * Defining Tag routes
+ */
+Route::resource('tags', TagController::class)
+    ->only(['show']);
 
 require __DIR__.'/auth.php';

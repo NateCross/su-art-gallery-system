@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artwork;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,63 +33,11 @@ class ArtworkController extends Controller
      */
     public function index(Request $request)
     {
-        $validatedData = $request->validate([
-            'search' => ['nullable'],
-            'option' => ['nullable'],
-        ]);
-
-        if (!array_key_exists('search', $validatedData)) {
-            $artworks = Artwork::latest()->paginate(15);
-        } else {
-            $search = '%' . $validatedData['search'] . '%';
-
-            $option = strtolower($validatedData['option']);
-            if ($option == 'title') {
-                $artworks = Artwork::query()
-                    ->latest()
-                    ->where('title', 'LIKE', $search)
-                    ->paginate(15)
-                    ->appends($validatedData);
-            } elseif ($option == 'artist') {
-                // TODO: Fix
-                // Actually, we need to separate this
-                // to show its own page
-                $artworks = User::query()
-                    ->where('name', 'LIKE', $search)
-                    ->artworks()
-                    ->with('users')
-                    ->latest();
-            }
-            // dd($artworks);
-        }
+        $artworks = Artwork::latest()->paginate(15);
 
         return Inertia::render('Artworks/Index', [
             'artworks' => $artworks,
         ]);
-
-
-        // if ($validatedData['search']) {
-        //     return $request;
-        // } else {
-        // }
-
-        // $req
-        // $artworks = null;
-
-        // if ($request) {
-        //     $request->whenHas('search', function($input) {
-        //         return $input;
-        //     }, function() {
-        //         $artworks = Artwork::with('users')->latest()->paginate(15);
-        //     });
-        // } else {
-        //     $artworks = Artwork::with('users')->latest()->paginate(15);
-        // }
-        // $artworks = Artwork::with('users')->latest()->paginate(15);
-
-        // return Inertia::render('Artworks/Index', [
-        //     'artworks' => $artworks,
-        // ]);
     }
 
     /**
@@ -179,6 +128,7 @@ class ArtworkController extends Controller
             'date' => ['required'],
             'description' => ['nullable'],
             'alt_text' => ['nullable'],
+            'tags' => ['nullable', 'array'],
         ]);
 
         // Only delete and add the new image if an image
@@ -191,9 +141,19 @@ class ArtworkController extends Controller
             $validatedData['path'] = $path;
         }
 
+        // Detach first so there are no duplicates
+        $artwork->tags()->detach();
+        foreach ($validatedData['tags'] as $tag) {
+            $sync = Tag::firstOrCreate([
+                'name' => $tag
+            ]);
+            $artwork->tags()->attach($sync);
+        }
+        // It is not part of the entity itself so we unset it first
+        unset($validatedData['tags']);
+
         $artwork->update($validatedData);
 
-        // return($this->show($artwork));
         return redirect()->route('artworks.show', $artwork);
     }
 

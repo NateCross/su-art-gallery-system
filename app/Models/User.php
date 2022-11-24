@@ -50,7 +50,6 @@ class User extends Authenticatable
     {
         return $this
             ->belongsToMany(Artwork::class)
-            ->with('users')
             ->latest()
             ->paginate(15);
     }

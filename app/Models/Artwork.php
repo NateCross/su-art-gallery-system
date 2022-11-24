@@ -12,6 +12,7 @@ class Artwork extends Model
     // Eager loads the relations automatically
     protected $with = [
         'users',
+        'tags',
     ];
 
     protected $fillable = [
