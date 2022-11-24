@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
 
@@ -214,7 +214,31 @@ function HeaderEnd({ auth }) {
   )
 }
 
-export default function Header({ children }) {
+function Footer() {
+  return <>
+    <footer
+      className='
+        footer 
+        items-center 
+        p-4
+        bg-neutral
+        text-neutral-content
+        mt-5
+      '
+    >
+      <div className="items-center">
+        <p>
+          Made with
+          <FontAwesomeIcon icon={faCoffee} className='mx-2' />
+          by Nathan Cruz and Dane Dedoroy
+        </p>
+      </div>
+
+    </footer>
+  </>
+}
+
+export default function Layout({ children }) {
   const { auth } = usePage().props;
 
   return <>
@@ -231,5 +255,6 @@ export default function Header({ children }) {
     <main>
       {children}
     </main>
+    <Footer />
   </>
 }

@@ -7,7 +7,14 @@ export function Pagination({ links, page }) {
   links[links.length - 1].label = 'Next';
 
   return (
-    <>
+    <div className='
+      btn-group
+      w-full
+      flex
+      items-center
+      justify-center
+      mt-5
+    '>
       {links.map((link, index) => (
         <Link
           href={link.url}
@@ -15,10 +22,9 @@ export function Pagination({ links, page }) {
           className={`
             btn
             ${page === index ? 'btn-active' : ''}
-            ${index === 0 || index === links.length - 1 ? 'mx-5' : ''}
           `}
         >{link?.label}</Link>
       ))}
-    </>
+    </div>
   );
 }
