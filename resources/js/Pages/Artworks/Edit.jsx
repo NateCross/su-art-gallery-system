@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head } from '@inertiajs/inertia-react';
 import { getImageFromDisk } from '../../Utils';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 import 'tw-elements';
 
 export default function Edit({ auth, artwork }) {
@@ -55,133 +56,69 @@ export default function Edit({ auth, artwork }) {
   return (
     <>
       <Head title="Edit Artwork" />
-      <div className='mx-5'>
-        <h1 className='font-bold text-3xl mb-3'>Edit Artwork</h1>
-        <form 
-          onSubmit={submit}
-          className='
-            form-control
-            w-full
-          '
-        >
-          <label 
-            htmlFor="image"
-            className='
-              label
-          '>
-            <span className='label-text'>
-              Image of Artwork
-            </span>
-          </label>
-          <input
-            type="file"
-            name="image"
-            id="image"
-            accept="image/png, image/jpeg"
-            onChange={e => setData('image', e.target.files[0])}
-            ref={fileInputRef}
-            className='
-              file-input 
-              file-input-bordered
-            '
-          />
-          {progress && (
-            <progress value={progress.percentage} max="100">
-              {progress.percentage}%
-            </progress>
-          )}
-          { /* Show current image if null, and uploaded image if not */}
-          <img
-            src={data.image ? (
-              URL.createObjectURL(data.image)
-            ) : getImageFromDisk(artwork.path)}
-          />
-          <InputError message={errors.image} className="mt-2" />
-
-          <label htmlFor="title">Title</label>
-          <input
-            value={data.title}
-            type="text"
-            id="title"
-            onChange={e => setData('title', e.target.value)}
-            className='input input-bordered'
-          />
-          <InputError message={errors.title} className="mt-2" />
-
-          <label htmlFor="date">Date</label>
-          <input
-            value={data.date}
-            type="date"
-            name="date"
-            id="date"
-            onChange={e => setData('date', e.target.value)}
-          />
-          <InputError message={errors.date} className="mt-2" />
-
-          <textarea
-            value={data.description}
-            placeholder="Describe your artwork"
-            className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            onChange={e => setData('description', e.target.value)}
-          ></textarea>
-          <InputError message={errors.description} className="mt-2" />
-
-          <PrimaryButton className="mt-4" processing={processing}>Edit Artwork</PrimaryButton>
-
-        </form>
-
-        { /* Tags form */ }
-        <form
-          onSubmit={addTag}
-        >
-          <label htmlFor="">Tags</label>
-          <input 
-            type="text" 
-            id='tag'
-            name='tag'
-            value={tagInput}
-            onChange={(e) => { setTagInput(e.target.value) }}
-          />
-          <button 
-            type="submit"
-            className='
-              btn
-              btn-rounded
-            '
-          >
-            Add Tag
-          </button>
-        </form>
-
-        { /* Tag output */ }
-        <output>
-          {data.tags.map((tag) => (
-            <button 
-              className="
-                badge
-              "
-              key={tag}
-              onClick={removeTag}
-              value={tag}
-            >
-              {tag}
-            </button>
-          ))}
-        </output>
-
-        {/* <button
-          onClick={() => {
-            reset();
-            fileInputRef.current.value = null;
-
-            setTagInput('');
-            setData('tags', []);
-          }}
-          className='btn'
-        >
-          Reset Fields
-        </button> */}
+      <h1 className='font-bold text-3xl mb-3 text-center'>Edit Artwork</h1>
+      {/* <div className='
+        flex
+        flex-col
+        w-full
+        h-max
+        lg:flex-row
+        mt-5
+        px-10
+        gap-10
+      '> */}
+      <div className='
+        w-full
+        h-max
+        lg:grid
+        mt-5
+        px-10
+        gap-10
+        grid-cols-2
+      '>
+        <LeftCard />
+        <RightCard artwork={artwork} data={data} />
       </div>
     </>
+  )
+}
+
+function LeftCard() {
+  return (
+    <div className='
+      flex-none
+      h-fit
+      basis-1/2
+      card
+      bg-base-300
+      rounded-box
+    '>
+      Stuff
+    </div>
+  )
+}
+
+function RightCard({ artwork, data }) {
+  return (
+    <div className='
+      flex-none
+      basis-1/2
+      card
+      bg-base-300
+      rounded-box
+      object-contain
+      overflow-clip
+    '>
+      <img
+        src={data.image ? (
+          URL.createObjectURL(data.image)
+          ) : getImageFromDisk(artwork.path)}
+        className='
+          w-full
+          h-full
+        '
+      />
+    </div>
+
   )
 }
