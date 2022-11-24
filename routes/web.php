@@ -67,6 +67,7 @@ Route::controller(SearchController::class)
     ->group(function() {
         Route::get('artworks', 'artworks')->name('search.artworks');
         Route::get('artists', 'artists')->name('search.artists');
+        Route::get('tags', 'tags')->name('search.tags');
     });
 
 /**

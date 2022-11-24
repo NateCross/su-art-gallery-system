@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 
-// import { useForm } from '@inertiajs/inertia';
 export function Artwork({ data }) {
   return (
     <li>

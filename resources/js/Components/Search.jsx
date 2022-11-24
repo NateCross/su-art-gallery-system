@@ -47,7 +47,7 @@ export function Search() {
   const searchOptions = {
     'Artwork': 'search.artworks',
     'Artist': 'search.artists',
-    // 'Tag': 'search.tags',
+    'Tag': 'search.tags',
   };
 
   const { data, setData, processing, errors, get } = useForm({

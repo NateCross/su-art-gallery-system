@@ -23,5 +23,6 @@ module.exports = {
       require('@tailwindcss/typography'),
       require("daisyui"),
       require('tw-elements/dist/plugin'),
+      require('tailwindcss-textshadow'),
     ],
 };
