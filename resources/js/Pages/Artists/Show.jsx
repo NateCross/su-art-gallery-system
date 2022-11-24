@@ -1,6 +1,5 @@
 import React from 'react'
 import { Head } from '@inertiajs/inertia-react';
-import { Pagination } from '../../Components/Pagination';
 import GalleryDisplay from '@/Components/GalleryDisplay';
 
 export default function Show({ auth, artist, artworks }) {

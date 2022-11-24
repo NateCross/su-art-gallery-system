@@ -13,7 +13,6 @@ export function Pagination({ links, page }) {
       flex
       items-center
       justify-center
-      mt-5
     '>
       {links.map((link, index) => (
         <Link

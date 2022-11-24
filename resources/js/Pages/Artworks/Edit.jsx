@@ -55,18 +55,35 @@ export default function Edit({ auth, artwork }) {
   return (
     <>
       <Head title="Edit Artwork" />
-      <div>
-        <h1>Edit Artwork</h1>
-        <form onSubmit={submit}>
-          <label htmlFor="image">Image of Artwork</label>
+      <div className='mx-5'>
+        <h1 className='font-bold text-3xl mb-3'>Edit Artwork</h1>
+        <form 
+          onSubmit={submit}
+          className='
+            form-control
+            w-full
+          '
+        >
+          <label 
+            htmlFor="image"
+            className='
+              label
+          '>
+            <span className='label-text'>
+              Image of Artwork
+            </span>
+          </label>
           <input
             type="file"
             name="image"
             id="image"
             accept="image/png, image/jpeg"
             onChange={e => setData('image', e.target.files[0])}
-            className='file-input file-input-bordered'
             ref={fileInputRef}
+            className='
+              file-input 
+              file-input-bordered
+            '
           />
           {progress && (
             <progress value={progress.percentage} max="100">

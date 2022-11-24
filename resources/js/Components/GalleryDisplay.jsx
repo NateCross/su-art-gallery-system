@@ -17,6 +17,8 @@ function ImageComponent(props) {
 }
 
 export default function GalleryDisplay({ artworks }) {
+  if (artworks.data.length <= 0) return;
+
   const galleryArtworks = artworks.data.map((data) => (
     {
       caption: data.title,
@@ -37,6 +39,33 @@ export default function GalleryDisplay({ artworks }) {
           title: tag.name,
         }
       )),
+      thumbnailCaption: (
+      <div className='
+        sm:hidden
+        top-full
+        transform
+        -translate-y-full
+        absolute
+        z-50
+        bg-neutral
+        w-full
+        px-3
+        py-1
+        text-neutral-content
+      '>
+        <p
+          className='
+            font-bold
+            text-lg
+          '
+        >
+          {data.title}
+        </p>
+        <p
+        >
+          {data.users[0].name}
+        </p>
+      </div>),
       customOverlay: <div className='relative w-full h-full'>
         <div className='
           w-full
@@ -88,7 +117,7 @@ export default function GalleryDisplay({ artworks }) {
     }
   ));
   return <div>
-    <div>
+    <div className='my-5'>
       <Gallery
         images={galleryArtworks}
         enableImageSelection={false}

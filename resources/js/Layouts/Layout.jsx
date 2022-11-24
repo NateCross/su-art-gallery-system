@@ -25,8 +25,7 @@ function LogoLink() {
 
 function NavLink({ name, routeLink, isActive }) {
   const styles = isActive ? `
-    text-primary
-    hover:text-primary-focus
+    tab-active
   ` : `
   `;
   return (
@@ -35,9 +34,10 @@ function NavLink({ name, routeLink, isActive }) {
         href={route(routeLink)}
         className={`
           transition-all
-          btn
-          btn-ghost
+          tab
+          tab-bordered
           ${styles}
+          text-lg
         `}
       >
         {name}
@@ -64,7 +64,7 @@ function Navbar() {
       items-center
 
       hidden
-      sm:flex
+      sm:tabs
     '>
       {Links.map((item) => (
         <NavLink
@@ -241,20 +241,21 @@ function Footer() {
 export default function Layout({ children }) {
   const { auth } = usePage().props;
 
-  return <>
+  return <div className='flex flex-col h-screen'>
     <header
       className='
         navbar
         bg-base-300
+        mb-5
       '
     >
       <LogoLink />
       <Navbar />
       <HeaderEnd auth={auth} />
     </header>
-    <main>
+    <main className='flex-grow'>
       {children}
     </main>
     <Footer />
-  </>
+  </div>
 }
