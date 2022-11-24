@@ -109,7 +109,6 @@ export default function Edit({ auth, artwork }) {
           ></textarea>
           <InputError message={errors.description} className="mt-2" />
 
-
           <PrimaryButton className="mt-4" processing={processing}>Edit Artwork</PrimaryButton>
 
         </form>

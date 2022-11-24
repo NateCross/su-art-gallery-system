@@ -1,13 +1,13 @@
 import React from 'react'
 import { Head, Link } from '@inertiajs/inertia-react';
-import { Artwork } from '../../Components/Artwork';
+// import { Artwork } from '../../Components/Artwork';
 import { Pagination } from '../../Components/Pagination';
 import { Gallery } from 'react-grid-gallery';
 
 function ImageComponent(props) {
   return (
     <Link
-      href={props.item.href} 
+      href={props.item.href}
       target='_blank'
       className='
       '
@@ -30,6 +30,18 @@ export default function Index({ auth, artworks }) {
       width: data.width,
       alt: data.alt_text,
       href: route('artworks.show', data.id),
+      tags: data.tags.map((tag) => (
+        {
+          value: (
+            <Link
+              href={route('tags.show', tag.id)}
+            >
+              {tag.name}
+            </Link>
+          ),
+          title: tag.name,
+        }
+      )),
       customOverlay: <div className='relative w-full h-full'>
         <div className='
           w-full
@@ -42,45 +54,41 @@ export default function Index({ auth, artworks }) {
           absolute
         '>
         </div>
-
-        <p
+        <div
           className='
-            opacity-100
             absolute
-            font-bold
-            text-primary-content
-            top-3/4 
-            left-1/2 
-            transform 
-            -translate-x-1/2 
-            -translate-y-3/4
-            text-left
-            truncate
-            text-stroke
-            break-all
-          '
-        >
-          {data.title}
-        </p>
+            w-full
+            h-[33%]
+            top-full
+            transform
+            -translate-y-full
+            text-center
+        '>
+          <p
+            className='
+              font-bold
+              text-primary-content
+              truncate
+              text-stroke
+              break-all
+              mx-1
+              text-xl
+          '>
+            {data.title}
+          </p>
 
-        <p
-          className='
-            opacity-100
-            absolute
-            text-primary-content
-            top-[90%]
-            left-1/2 
-            transform 
-            -translate-x-1/2 
-            -translate-y-[90%]
-            text-left
-            truncate
-            text-stroke
-            break-all
-          '
-        >
-          {data.users[0].name}
-        </p>
+          <p
+            className='
+              text-primary-content
+              truncate
+              text-stroke
+              break-all
+              mx-1
+          '>
+            {data.users[0].name}
+          </p>
+        </div>
+
       </div>
     }
   ));
@@ -97,24 +105,34 @@ export default function Index({ auth, artworks }) {
       >
         Add Artwork
       </Link>
-      {/* <ul>
-        {artworks.data.map((data) => (
-          <Artwork data={data} key={data?.title} />
-        ))}
-      </ul> */}
       <div
         className='
-          flex
-          items-center
-          justify-center
         '
       >
-        <Gallery 
-          images={galleryArtworks} 
-          enableImageSelection={false}
-          thumbnailImageComponent={ImageComponent}
-        />
+      <Gallery
+        images={galleryArtworks}
+        enableImageSelection={false}
+        thumbnailImageComponent={ImageComponent}
+        rowHeight='360'
+        margin={4}
+        tagStyle={{
+          display: "inline",
+          padding: ".2em .6em .3em",
+          fontSize: "75%",
+          fontWeight: "800",
+          lineHeight: "1",
+          color: "hsl(var(--pc))",
+          background: "rgba(0,0,0,0.65)",
+          textAlign: "center",
+          whiteSpace: "nowrap",
+          verticalAlign: "baseline",
+          borderRadius: "1.9rem",
+          transition: "all 0.15s",
+        }}
+      />
+
       </div>
+
       <div className='btn-group'>
         <Pagination links={artworks?.links} page={artworks?.current_page} />
       </div>

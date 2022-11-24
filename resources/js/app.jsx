@@ -1,5 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
+import 'react-18-image-lightbox/style.css';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';

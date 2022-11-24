@@ -1,6 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link } from '@inertiajs/inertia-react';
-import React from 'react'
+import React, { useState } from 'react'
 import { getImageFromDisk } from '../../Utils';
+import Lightbox from 'react-18-image-lightbox';
+
+// Fixes weird bug in Lightbox where global is not defined
+window.global = window;
 
 function DeleteModal({ artwork }) {
   return (
@@ -48,7 +54,7 @@ function TagDisplay({ tag }) {
         badge
         text-lg
         transition-all
-        hover:bg-base-300
+        hover:text-primary
       '
     >
       <Link
@@ -61,11 +67,18 @@ function TagDisplay({ tag }) {
 }
 
 function ArtworkInfo({ artwork }) {
+  const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
+
   return <div>
     <img
       src={getImageFromDisk(artwork?.path)}
       width={artwork?.width}
       height={artwork?.height}
+      alt={artwork?.alt_text}
+      onClick={() => setLightboxIsOpen(true)}
+      className='
+        cursor-pointer
+      '
     />
     <h1
       className='
@@ -93,6 +106,13 @@ function ArtworkInfo({ artwork }) {
     >
       {artwork.description}
     </p>
+
+    {lightboxIsOpen && (
+      <Lightbox
+        mainSrc={getImageFromDisk(artwork?.path)}
+        onCloseRequest={() => setLightboxIsOpen(false)}
+      />
+    )}
   </div>
 }
 
@@ -102,6 +122,18 @@ export default function Show({ auth, artwork }) {
 
   return (
     <div>
+      <Link
+        href={route('artworks.index')}
+        className='
+          btn
+          text-lg
+          gap-2
+        '
+      >
+        <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+        Back
+      </Link>
+
       <ArtworkInfo artwork={artwork} />
 
       <ul>
@@ -115,7 +147,9 @@ export default function Show({ auth, artwork }) {
           <Link
             className='btn btn-primary'
             href={route('artworks.edit', artwork.id)}
-          >Edit</Link>
+          >
+            Edit
+          </Link>
           <DeleteModal artwork={artwork} />
         </>
       )}
