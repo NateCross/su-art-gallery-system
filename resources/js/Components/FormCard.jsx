@@ -142,7 +142,14 @@ export function FormCard({
           <label htmlFor="tag" className='label'>
             <span className="label-text">Tags</span>
           </label>
-          <div className="input-group">
+          <div className="
+            flex
+            flex-col
+            gap-2
+            sm:flex-row
+            sm:input-group 
+            sm:gap-0
+          ">
             <input
               type="text"
               className="input input-bordered"
@@ -192,6 +199,8 @@ export function FormCard({
       <div
         className='
           m-5
+          flex
+          justify-end
       '>
         <button
           type="submit"

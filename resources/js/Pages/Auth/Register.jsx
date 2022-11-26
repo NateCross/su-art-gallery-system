@@ -1,117 +1,155 @@
 import React, { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { FormTextInput } from '@/Components/FormTextInput';
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+  const { data, setData, post, processing, errors, reset } = useForm({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  });
 
-    useEffect(() => {
-        return () => {
-            reset('password', 'password_confirmation');
-        };
-    }, []);
-
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+  useEffect(() => {
+    return () => {
+      reset('password', 'password_confirmation');
     };
+  }, []);
 
-    const submit = (e) => {
-        e.preventDefault();
+  const submit = (e) => {
+    e.preventDefault();
 
-        post(route('register'));
-    };
+    post(route('register'));
+  };
 
-    return (
-        <GuestLayout>
-            <Head title="Register" />
+  return <>
+    <Head title="Register" />
+    <div className='
+      grid
+      place-items-center
+      mx-5
+      sm:h-[70vh]
+      grid-cols-1
+    '>
+      <div className='
+        card
+        bg-base-300
+        rounded-box
+        w-full
+        max-w-xl
+        mx-5
+      '>
+        {status &&
+          <div className="
+            mb-4 font-medium text-sm text-green-600
+          ">
+            {status}
+          </div>}
+        <form
+          onSubmit={submit}
+          className='
+            form-control
+            gap-2
+            mx-5
+          '
+        >
+          <div className='
+              grid
+              place-items-center
+          '>
+            <div className='
+              max-w-md
+              w-full
+              flex
+              flex-col
+              my-4
+              gap-4
+            '>
+              <FormTextInput
+                value={data.name}
+                id='name'
+                name='name'
+                title='Name'
+                label='Name'
+                onChange={e => setData('name', e.target.value)}
+                error={errors.name}
+                autoComplete='name'
+              />
+              <FormTextInput
+                value={data.email}
+                id='email'
+                name='email'
+                title='Email Address'
+                label='Email Address'
+                onChange={e => setData('email', e.target.value)}
+                error={errors.email}
+                autoComplete='username'
+              />
+              <FormTextInput
+                value={data.password}
+                id='password'
+                name='password'
+                title='Password'
+                label='Password'
+                type='password'
+                onChange={e => setData('password', e.target.value)}
+                error={errors.password}
+                autoComplete='current-password'
+              />
+              <FormTextInput
+                value={data.password_confirmation}
+                id='password_confirmation'
+                name='password_confirmation'
+                title='Confirm Password'
+                label='Confirm Password'
+                type='password'
+                onChange={e => setData('password_confirmation', e.target.value)}
+                error={errors.password_confirmation}
+              />
+            </div>
+          </div>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="name" value="Name" />
+          <div className="
+            flex 
+            items-end
+            justify-end 
+            max-w-lg
+            gap-3
+            m-5
+            mt-3
+          ">
+            <div className='
+              flex
+              flex-col
+              gap-3
+            '>
+              <Link
+                href={route('login')}
+                className="
+                  btn
+                  btn-sm
+                "
+              >
+                Already registered?
+              </Link>
+            </div>
 
-                    <TextInput
-                        type="text"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                        required
-                    />
+            <button
+              type='submit'
+              className='
+                btn
+                btn-primary
+                btn-rounded
+                btn-lg
+              '
+            >
+              Register
+            </button>
 
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
+          </div>
+        </form>
+      </div>
 
-                <div className="mt-4">
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
-    );
+    </div>
+  </>
 }

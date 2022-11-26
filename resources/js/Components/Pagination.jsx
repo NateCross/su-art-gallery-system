@@ -14,16 +14,22 @@ export function Pagination({ links, page }) {
       items-center
       justify-center
     '>
-      {links.map((link, index) => (
-        <Link
-          href={link.url}
-          key={index}
-          className={`
-            btn
-            ${page === index ? 'btn-active' : ''}
-          `}
-        >{link?.label}</Link>
-      ))}
+      {links.map((link, index) => {
+        if (
+          (index === 0 
+          || index === links.length - 1)
+          || (page - 2 <= index && index <= page + 2)
+        ) return <Link
+            href={link.url}
+            key={index}
+            className={`
+              btn
+              ${page === index ? 'btn-active' : ''}
+            `}
+          >
+            {link?.label}
+          </Link>
+      })}
     </div>
   );
 }

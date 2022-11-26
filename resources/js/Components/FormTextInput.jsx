@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 export function FormTextInput({
-  onChange, label, placeholder = null, id, title, value, error, required = false, type = 'text',
+  onChange, label, placeholder = null, id, title, value, error, required = false, type = 'text', autoComplete = null,
 }) {
-  return <div>
+  return <div className='w-full'>
 
     <label htmlFor={id} className='label'>
       <span className='label-text'>
@@ -31,6 +31,7 @@ export function FormTextInput({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        autoComplete={autoComplete}
         className={`
           input 
           input-bordered 

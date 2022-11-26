@@ -13,11 +13,13 @@ function LogoLink() {
           btn 
           btn-ghost 
           uppercase
-          text-xl
+          text-2xl
+          text-red-700
+          font-bold
         '
         href='/'
       >
-        SU Artfolio
+        SOAP
       </Link>
     </div>
   )
