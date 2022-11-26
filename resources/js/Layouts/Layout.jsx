@@ -100,7 +100,7 @@ function Dropdown({ auth }) {
           <Link
             href={route('artworks.create')}
           >
-            Upload Artwork
+            Add Artwork
           </Link>
         </li>
         <div className="divider my-1" />

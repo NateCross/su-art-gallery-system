@@ -21,6 +21,9 @@ return new class extends Migration
             // This path is where the artwork is stored on disk
             $table->string('path');
 
+            // Likewise, but for the compressed thumbnail
+            $table->string('thumbnail');
+
             // We get the width and height
             // to preload image size in React
             $table->integer('width');

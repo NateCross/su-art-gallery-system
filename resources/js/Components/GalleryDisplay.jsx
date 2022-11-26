@@ -61,8 +61,7 @@ export default function GalleryDisplay({ artworks }) {
         >
           {data.title}
         </p>
-        <p
-        >
+        <p>
           {data.users[0].name}
         </p>
       </div>),

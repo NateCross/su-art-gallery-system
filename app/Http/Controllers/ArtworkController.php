@@ -66,6 +66,7 @@ class ArtworkController extends Controller
             'date' => ['required'],
             'description' => ['nullable'],
             'alt_text' => ['nullable'],
+            'tags' => ['nullable', 'array'],
         ]);
 
         $path = $request->file('image')->store('public/artworks');
@@ -77,10 +78,24 @@ class ArtworkController extends Controller
         $validatedData['width'] = $width;
         $validatedData['height'] = $height;
 
+        // Separate the tags from the validated data
+        // Since that is not an attribute in the artwork
+        $tags = $validatedData['tags'];
+        unset($validatedData['tags']);
+
         $art = Artwork::create($validatedData);
+
+        // Attach users
         $art->users()->attach($request->user()->id);
 
-        // return $this->index();
+        // Attach tags
+        foreach ($tags as $tag) {
+            $sync = Tag::firstOrCreate([
+                'name' => $tag
+            ]);
+            $art->tags()->attach($sync);
+        }
+
         return redirect()->route('artworks.index');
     }
 
@@ -122,6 +137,7 @@ class ArtworkController extends Controller
      */
     public function update(Request $request, Artwork $artwork)
     {
+        // dd($request);
         $validatedData = $request->validate([
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
@@ -131,6 +147,7 @@ class ArtworkController extends Controller
             'tags' => ['nullable', 'array'],
         ]);
 
+
         // Only delete and add the new image if an image
         // is uploaded
         if ($request->hasFile('image')) {
@@ -138,7 +155,11 @@ class ArtworkController extends Controller
 
             $path = $request->file('image')->store('public/artworks');
 
+            [$width, $height] = getimagesize($request->file('image'));
+
             $validatedData['path'] = $path;
+            $validatedData['width'] = $width;
+            $validatedData['height'] = $height;
         }
 
         // Detach first so there are no duplicates

@@ -1,77 +1,58 @@
-import React from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import InputError from '@/Components/InputError';
+import React, { useRef } from 'react'
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head } from '@inertiajs/inertia-react';
+import 'tw-elements';
+import { FormCard } from '../../Components/FormCard';
+import { ImagePreviewCard } from '@/Components/ImagePreviewCard';
 
-export default function Create({ auth }) {
-  const { data, setData, post, processing, reset, errors, progress } = useForm({
+export default function Edit({ auth, artwork }) {
+  const {
+    data,
+    setData,
+    post,
+    processing,
+    reset,
+    errors,
+    progress,
+  } = useForm({
     title: '',
     description: '',
     image: null,
+    alt_text: '',
     date: '',
+    tags: [],
   });
 
+  /** FUNCTIONS */
   const submit = (e) => {
     e.preventDefault();
     post(route('artworks.store'), { onSuccess: () => reset() });
   };
 
   return (
-    <AuthenticatedLayout auth={auth}>
-      <Head title="Create Artwork" />
-
-      <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form onSubmit={submit}>
-
-          { /* Artwork upload */ }
-          <label htmlFor="image">Image of Artwork</label>
-          <input 
-            type="file" 
-            name="image" 
-            id="image" 
-            accept="image/png, image/jpeg"
-            onChange={e => setData('image', e.target.files[0])}
-          />
-          {progress && (
-            <progress value={progress.percentage} max="100">
-              {progress.percentage}%
-            </progress>
-          )}
-          {data.image && (
-            <img src={URL.createObjectURL(data.image)}/>
-          )}
-          <InputError message={errors.image} className="mt-2" />
-
-          <label htmlFor="title">Title</label>
-          <input 
-            value={data.title}
-            type="text" 
-            id="title" 
-            onChange={e => setData('title', e.target.value)}
-          />
-          <InputError message={errors.title} className="mt-2" />
-
-          <label htmlFor="date">Date</label>
-          <input 
-            value={data.date}
-            type="date" 
-            name="date" 
-            id="date" 
-            onChange={e => setData('date', e.target.value)}
-          />
-          <InputError message={errors.date} className="mt-2" />
-
-          <textarea
-            value={data.description}
-            placeholder="Describe your artwork"
-            className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            onChange={e => setData('description', e.target.value)}
-          ></textarea>
-          <InputError message={errors.description} className="mt-2" />
-          <PrimaryButton className="mt-4" processing={processing}>Upload Artwork</PrimaryButton>
-        </form>
+    <>
+      <Head title="Add Artwork" />
+      <h1 className='font-bold text-3xl mb-3 text-center'>Add Artwork</h1>
+      <div className='
+        w-full
+        h-max
+        lg:grid
+        mt-5
+        px-10
+        gap-10
+        lg:grid-cols-2
+        flex
+        flex-col
+      '>
+        <FormCard
+          data={data}
+          setData={setData}
+          onSubmit={submit}
+          errors={errors}
+          uploadRequired
+        />
+        <ImagePreviewCard artwork={artwork} data={data} />
       </div>
-    </AuthenticatedLayout>
-  );
+    </>
+  )
 }

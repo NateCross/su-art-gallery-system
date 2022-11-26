@@ -138,7 +138,7 @@ export default function Show({ auth, artwork }) {
 
       <ul>
         {artwork?.tags && artwork.tags.map((tag) => (
-          <TagDisplay tag={tag} />
+          <TagDisplay tag={tag} key={tag?.name} />
         ))}
       </ul>
 
