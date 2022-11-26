@@ -22,9 +22,9 @@ export default function GalleryDisplay({ artworks }) {
   const galleryArtworks = artworks.data.map((data) => (
     {
       caption: data.title,
-      src: `/${data.path.replace('public', 'storage')}`,
-      height: data.height,
-      width: data.width,
+      src: `/${data.thumbnail.replace('public', 'storage')}`,
+      height: data.thumbnail_height,
+      width: data.thumbnail_width,
       alt: data.alt_text,
       href: route('artworks.show', data.id),
       tags: data.tags.map((tag) => (
@@ -40,32 +40,32 @@ export default function GalleryDisplay({ artworks }) {
         }
       )),
       thumbnailCaption: (
-      <div className='
-        sm:hidden
-        top-full
-        transform
-        -translate-y-full
-        absolute
-        z-50
-        bg-neutral
-        w-full
-        px-3
-        py-1
-        text-neutral-content
-      '>
-        <p
-          className='
-            font-bold
-            text-lg
-          '
-        >
-          {data.title}
-        </p>
-        <p>
-          {data.users[0].name}
-        </p>
-      </div>),
-      customOverlay: <div className='relative w-full h-full'>
+        <div className='
+          sm:hidden
+          top-full
+          transform
+          -translate-y-full
+          absolute
+          z-50
+          bg-neutral
+          w-full
+          px-3
+          py-1
+          text-neutral-content
+        '>
+          <p
+            className='
+              font-bold
+              text-lg
+            '
+          >
+            {data.title}
+          </p>
+          <p>
+            {data.users[0].name}
+          </p>
+        </div>),
+      customOverlay: <div className='relative w-full h-full hidden sm:block'>
         <div className='
           w-full
           h-full

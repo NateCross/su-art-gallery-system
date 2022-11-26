@@ -23,6 +23,9 @@ class Artwork extends Model
         'alt_text',
         'width',
         'height',
+        'thumbnail',
+        'thumbnail_width',
+        'thumbnail_height',
     ];
 
     /**

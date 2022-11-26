@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Intervention\Image\Facades\Image;
 
 class ArtworkController extends Controller
 {
@@ -71,12 +72,29 @@ class ArtworkController extends Controller
 
         $path = $request->file('image')->store('public/artworks');
 
+        // Creating the thumbnail
+        $thumbnail = $request->file('image')->store('public/artworks/thumbnails');
+
+        // The row height of gallery is 360. So we can
+        // resize the thumbnail to be exactly 360 so the
+        // quality loss is more negligible
+        $thumbnail_image = $this->createThumbnail(
+            str_replace('public', 'storage', $thumbnail), 
+            null, 
+            360,
+        );
+
         // return(getimagesize($request->file('image')));
         [$width, $height] = getimagesize($request->file('image'));
 
         $validatedData['path'] = $path;
+        $validatedData['thumbnail'] = $thumbnail;
         $validatedData['width'] = $width;
         $validatedData['height'] = $height;
+        $validatedData['thumbnail_width'] = 
+            $thumbnail_image->width();
+        $validatedData['thumbnail_height'] = 
+            $thumbnail_image->height();
 
         // Separate the tags from the validated data
         // Since that is not an attribute in the artwork
@@ -147,7 +165,6 @@ class ArtworkController extends Controller
             'tags' => ['nullable', 'array'],
         ]);
 
-
         // Only delete and add the new image if an image
         // is uploaded
         if ($request->hasFile('image')) {
@@ -194,6 +211,22 @@ class ArtworkController extends Controller
     public function test_route(Request $request)
     {
         dd($request);
+    }
+
+    /**
+     * Create a thumbnail of specified size
+     *
+     * @param string $path path of thumbnail
+     * @param int $width
+     * @param int $height
+     */
+    public function createThumbnail($path, $width, $height)
+    {
+        $img = Image::make($path)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($path);
+        return $img;
     }
 
     /**

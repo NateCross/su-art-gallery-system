@@ -28,6 +28,8 @@ return new class extends Migration
             // to preload image size in React
             $table->integer('width');
             $table->integer('height');
+            $table->integer('thumbnail_width');
+            $table->integer('thumbnail_height');
 
             $table->string('alt_text')->nullable();
             $table->string('description')->nullable();
