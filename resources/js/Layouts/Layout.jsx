@@ -121,8 +121,76 @@ function Navbar() {
   </>
 }
 
-function Dropdown({ auth }) {
+function LoggedInDropdown({ auth }) {
   if (!auth?.user) return null;
+
+  return <>
+    <li className='
+      pointer-events-none
+    '>
+      <p>
+        Hello, {auth.user.name}
+      </p>
+    </li>
+    <div className="divider my-1" />
+    <li>
+      <Link
+        href={route('artworks.create')}
+      >
+        <FontAwesomeIcon icon={faPlus} />
+        Add Artwork
+      </Link>
+    </li>
+    <div className="divider my-1" />
+    <li>
+      <Link
+        href={route('artists.show', auth?.user?.id)}
+      >
+        My Artworks
+      </Link>
+    </li>
+    <li>
+      <Link
+        href={route('profile.edit')}
+      >
+        Account Settings
+      </Link>
+    </li>
+    <li>
+      <Link
+        method="post"
+        href={route('logout')}
+        as="button"
+      >
+        Log Out
+      </Link>
+    </li>
+  </>
+}
+
+function GuestDropdown({ auth }) {
+  if (auth?.user) return null;
+
+  return <>
+    <li>
+      <Link
+        href={route('register')}
+      >
+        Register
+      </Link>
+    </li>
+    <li>
+      <Link
+        href={route('login')}
+      >
+        Login
+      </Link>
+    </li>
+  </>
+}
+
+function Dropdown({ auth }) {
+  // if (!auth?.user) return null;
   return (
     <div className="dropdown dropdown-end sm:inline-block">
       <label 
@@ -139,46 +207,8 @@ function Dropdown({ auth }) {
         />
       </label>
       <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-56 mt-4">
-        <li className='
-          pointer-events-none
-        '>
-          <p>
-            Hello, {auth.user.name}
-          </p>
-        </li>
-        <div className="divider my-1" />
-        <li>
-          <Link
-            href={route('artworks.create')}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-            Add Artwork
-          </Link>
-        </li>
-        <div className="divider my-1" />
-        <li>
-          <Link
-            href={route('artists.show', auth?.user?.id)}
-          >
-            My Artworks
-          </Link>
-        </li>
-        <li>
-          <Link
-            href={route('profile.edit')}
-          >
-            Account Settings
-          </Link>
-        </li>
-        <li>
-          <Link
-            method="post"
-            href={route('logout')}
-            as="button"
-          >
-            Log Out
-          </Link>
-        </li>
+        <LoggedInDropdown auth={auth} />
+        <GuestDropdown auth={auth} />
       </ul>
     </div>
   )
@@ -267,7 +297,7 @@ function HeaderEnd({ auth }) {
     ">
       <Search />
       <Dropdown auth={auth} />
-      <LoginLogout auth={auth} />
+      {/* <LoginLogout auth={auth} /> */}
 
     </div>
   )
