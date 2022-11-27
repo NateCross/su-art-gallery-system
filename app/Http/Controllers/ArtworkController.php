@@ -174,9 +174,22 @@ class ArtworkController extends Controller
 
             [$width, $height] = getimagesize($request->file('image'));
 
+            $thumbnail = $request->file('image')->store('public/artworks/thumbnails');
+
+            $thumbnail_image = $this->createThumbnail(
+                str_replace('public', 'storage', $thumbnail), 
+                null, 
+                360,
+            );
+
             $validatedData['path'] = $path;
+            $validatedData['thumbnail'] = $thumbnail;
             $validatedData['width'] = $width;
             $validatedData['height'] = $height;
+            $validatedData['thumbnail_width'] = 
+                $thumbnail_image->width();
+            $validatedData['thumbnail_height'] = 
+                $thumbnail_image->height();
         }
 
         // Detach first so there are no duplicates

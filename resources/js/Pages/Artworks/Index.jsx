@@ -10,14 +10,14 @@ export default function Index({ auth, artworks }) {
     <>
       <Head title="Artworks" />
 
-      <Link
+      {/* <Link
         className={`
           btn btn-primary ${!auth?.user ? 'invisible' : ''}
         `}
         href='/artworks/create'
       >
         Add Artwork
-      </Link>
+      </Link> */}
 
       <GalleryDisplay artworks={artworks} />
     </>
