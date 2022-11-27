@@ -11,7 +11,7 @@ export default function Show({ auth, artist, artworks }) {
         title={`${artist?.name}: Profile`}
       />
       <h1
-        className='text-2xl font-bold'
+        className='text-4xl font-bold mx-5'
       >
         {artist?.name}
       </h1>

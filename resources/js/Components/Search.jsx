@@ -67,7 +67,7 @@ export function Search() {
 
     <form 
       onSubmit={submit}
-      className='relative hidden sm:inline-flex input-group gap-px'
+      className='relative input-group gap-px'
     >
       <input
         type="search"
@@ -78,9 +78,9 @@ export function Search() {
           input 
           input-bordered 
           w-full
-          max-w-xs
-          min-w-[20rem]
+          min-w-[15rem]
           focus:outline-none
+          sm:min-w-[20rem]
         '
         value={data?.search}
         onChange={(e) => { setData('search', e.target.value); }} />

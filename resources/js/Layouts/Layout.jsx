@@ -128,9 +128,16 @@ function LoggedInDropdown({ auth }) {
     <li className='
       pointer-events-none
     '>
-      <p>
+      <p className='font-bold'>
         Hello, {auth.user.name}
       </p>
+    </li>
+    <li>
+      <Link
+        href={route('artists.show', auth?.user?.id)}
+      >
+        My Artworks
+      </Link>
     </li>
     <div className="divider my-1" />
     <li>
@@ -142,13 +149,6 @@ function LoggedInDropdown({ auth }) {
       </Link>
     </li>
     <div className="divider my-1" />
-    <li>
-      <Link
-        href={route('artists.show', auth?.user?.id)}
-      >
-        My Artworks
-      </Link>
-    </li>
     <li>
       <Link
         href={route('profile.edit')}
@@ -214,81 +214,6 @@ function Dropdown({ auth }) {
   )
 }
 
-function Hamburger({ auth }) {
-  return (
-
-    <div className="dropdown dropdown-end">
-
-    </div>
-  )
-}
-
-// function Search() {
-//   return (
-//     <form
-//       className='relative hidden sm:block'
-//     >
-//       <input 
-//         type="search" 
-//         name="search" 
-//         id="search" 
-//         placeholder="Search"
-//         className="
-//           input 
-//           input-bordered
-//           w-full
-//           max-w-xs
-//         "
-//       />
-//       <button 
-//         type="submit"
-//         className='
-//           absolute
-//           inset-y-0
-//           right-0
-//           flex
-//           items-center
-//           pr-3
-//           transition-all
-//           hover:text-primary
-//           focus:text-primary
-//         '
-//       >
-//         <FontAwesomeIcon icon={faMagnifyingGlass} />
-//       </button>
-//     </form>
-//   )
-// }
-
-function LoginLogout({ auth }) {
-  if (auth?.user) return null;
-  
-  return <>
-    <Link
-      href={route('login')}
-      className='
-        btn 
-        btn-ghost 
-        uppercase
-        text-xl
-      '
-    >
-      Login
-    </Link>
-    <Link
-      href={route('register')}
-      className='
-        btn 
-        btn-ghost 
-        uppercase
-        text-xl
-      '
-    >
-      Register
-    </Link>
-  </>
-}
-
 function HeaderEnd({ auth }) {
   return (
     <div className="
@@ -297,7 +222,6 @@ function HeaderEnd({ auth }) {
     ">
       <Search />
       <Dropdown auth={auth} />
-      {/* <LoginLogout auth={auth} /> */}
 
     </div>
   )

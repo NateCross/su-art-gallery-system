@@ -41,11 +41,6 @@ export default function Artwork({ artworks }) {
           '>
             No Artworks Found
           </h1>
-          <p className='
-            text-lg
-          '>
-            Login to an account to add artworks
-          </p>
         </div>
       </> : (
         <GalleryDisplay artworks={artworks} />

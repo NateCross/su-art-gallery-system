@@ -12,8 +12,9 @@ export default function Show({ tag, artworks }) {
 
     <h1
       className='
+        mx-5
+        text-4xl
         font-bold
-        text-3xl
       '
     >
       {tag?.name}
