@@ -138,12 +138,23 @@ class ArtworkController extends Controller
      * @param  \App\Models\Artwork  $artwork
      * @return \Illuminate\Http\Response
      */
-    public function edit(Artwork $artwork)
+    public function edit(Request $request, Artwork $artwork)
     {
+        $verifiedArtwork = $this->verifyUser($request, $artwork);
+        if (!$verifiedArtwork) {
+            return redirect(route('artworks.show', $artwork->id));
+        }
+
         $artwork->users;    // Gets the users first before returning
         return Inertia::render('Artworks/Edit', [
             'artwork' => $artwork,
         ]);
+    }
+
+    private function verifyUser(Request $request, Artwork $artwork)
+    {
+        // return $request->user()->artworks()->where('id', $artwork->id)->get();
+        return $request->user()->id == $artwork->users()->first()->id;
     }
 
     /**
@@ -155,7 +166,11 @@ class ArtworkController extends Controller
      */
     public function update(Request $request, Artwork $artwork)
     {
-        // dd($request);
+        $verifiedArtwork = $this->verifyUser($request, $artwork);
+        if (!$verifiedArtwork) {
+            redirect(route('artworks.show', $artwork->id));
+        }
+
         $validatedData = $request->validate([
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
@@ -214,8 +229,13 @@ class ArtworkController extends Controller
      * @param  \App\Models\Artwork  $artwork
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Artwork $artwork)
+    public function destroy(Request $request, Artwork $artwork)
     {
+        $verifiedArtwork = $this->verifyUser($request, $artwork);
+        if (!$verifiedArtwork) {
+            return redirect(route('artworks.show', $artwork->id));
+        }
+
         Storage::delete($artwork->path);
         $artwork->delete();
         return redirect()->route('artworks.index');
