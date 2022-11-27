@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCoffee, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function LogoLink() {
   return (
@@ -25,7 +26,7 @@ function LogoLink() {
   )
 }
 
-function NavLink({ name, routeLink, isActive }) {
+function NavLink({ name, routeLink, isActive, isTab = false }) {
   const styles = isActive ? `
     tab-active
   ` : `
@@ -36,10 +37,10 @@ function NavLink({ name, routeLink, isActive }) {
         href={route(routeLink)}
         className={`
           transition-all
-          tab
-          tab-bordered
+          ${isTab && 'tab tab-bordered'}
           ${styles}
           text-lg
+          ${(!isTab & isActive) && 'text-primary'}
         `}
       >
         {name}
@@ -60,30 +61,12 @@ const Links = [
 ]
 
 function Navbar() {
-  return (
-    <ul className='
+  return <>
+    <div className='
       navbar-center
-      items-center
-
-      hidden
-      sm:tabs
+      dropdown
+      sm:hidden
     '>
-      {Links.map((item) => (
-        <NavLink
-          name={item.name}
-          routeLink={item.link}
-          isActive={route().current(item.link)}
-          key={item.name}
-        />
-      ))}
-    </ul>
-  )
-}
-
-function Dropdown({ auth }) {
-  if (!auth?.user) return null;
-  return (
-    <div className="dropdown dropdown-end hidden sm:inline-block">
       <label 
         tabIndex={0} 
         className="
@@ -97,7 +80,73 @@ function Dropdown({ auth }) {
           icon={faBars} 
         />
       </label>
-      <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-52 mt-4">
+      <ul tabIndex={0} className='
+        dropdown-content
+        menu
+        p-2
+        shadow
+        bg-base-300
+        rounded-box
+        w-56
+        mt-4
+      '>
+        {Links.map((item) => (
+          <NavLink
+            name={item.name}
+            routeLink={item.link}
+            isActive={route().current(item.link)}
+            key={item.name}
+          />
+        ))}
+      </ul>
+    </div>
+
+    <ul className='
+      navbar-center
+      items-center
+
+      hidden
+      sm:tabs
+    '>
+      {Links.map((item) => (
+        <NavLink
+          name={item.name}
+          routeLink={item.link}
+          isActive={route().current(item.link)}
+          key={item.name}
+          isTab
+        />
+      ))}
+    </ul>
+  </>
+}
+
+function Dropdown({ auth }) {
+  if (!auth?.user) return null;
+  return (
+    <div className="dropdown dropdown-end sm:inline-block">
+      <label 
+        tabIndex={0} 
+        className="
+          btn 
+          btn-ghost 
+          btn-circle
+          text-xl
+          focus:text-primary
+      ">
+        <FontAwesomeIcon 
+          icon={faUser} 
+        />
+      </label>
+      <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-56 mt-4">
+        <li className='
+          pointer-events-none
+        '>
+          <p>
+            Hello, {auth.user.name}
+          </p>
+        </li>
+        <div className="divider my-1" />
         <li>
           <Link
             href={route('artworks.create')}
