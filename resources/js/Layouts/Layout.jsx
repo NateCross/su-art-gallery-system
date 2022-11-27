@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCoffee, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
 
@@ -102,6 +102,7 @@ function Dropdown({ auth }) {
           <Link
             href={route('artworks.create')}
           >
+            <FontAwesomeIcon icon={faPlus} />
             Add Artwork
           </Link>
         </li>
@@ -110,7 +111,14 @@ function Dropdown({ auth }) {
           <Link
             href={route('artists.show', auth?.user?.id)}
           >
-            My Profile
+            My Artworks
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={route('profile.edit')}
+          >
+            Account Settings
           </Link>
         </li>
         <li>
