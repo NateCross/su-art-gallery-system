@@ -6,6 +6,7 @@
  * @return ObjectURL
  */
 export function getImageFromDisk(path) {
+  if (!path) return null;
   const replacedString = path.replace('public', '/storage');
   return replacedString;
 }

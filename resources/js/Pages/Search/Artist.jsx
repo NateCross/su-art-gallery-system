@@ -1,4 +1,5 @@
 import { Pagination } from '@/Components/Pagination';
+import { getImageFromDisk } from '@/Utils';
 import { Link } from '@inertiajs/inertia-react';
 // import { Artwork as ArtworkComponent } from '../../Components/Artwork';
 import React from 'react'
@@ -8,8 +9,35 @@ function ArtistComponent({ data }) {
     <li>
       <Link
         href={route('artists.show', data.id)}
+        className='
+          flex
+          flex-col
+        '
       >
-        {data.name}
+        <div
+          className='
+            avatar
+          '
+        >
+          <div className='
+            h-36
+            w-36
+            md:h-48
+            md:w-48
+            rounded-full
+          '>
+            <img 
+              src={getImageFromDisk(data?.image)}
+            />
+          </div>
+        </div>
+        <p
+          className='
+            text-center
+          '
+        >
+          {data.name}
+        </p>
       </Link>
     </li>
   )
@@ -56,6 +84,12 @@ export default function Artist({ artists }) {
       <ul className='
         m-5
         text-2xl
+        grid
+        grid-cols-2
+        md:grid-cols-4
+        gap-y-5
+        grid-flow-row-dense
+        place-items-center
       '>
         {artists.data.map((data) => (
           <ArtistComponent data={data} key={data?.email} />
