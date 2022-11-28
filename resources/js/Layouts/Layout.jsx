@@ -5,6 +5,7 @@ import { faBars, faCoffee, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { getImageFromDisk } from '@/Utils';
 
 function LogoLink() {
   return (
@@ -191,8 +192,14 @@ function GuestDropdown({ auth }) {
 
 function Dropdown({ auth }) {
   // if (!auth?.user) return null;
+  console.log(auth.user)
   return (
-    <div className="dropdown dropdown-end sm:inline-block">
+    <div className="
+      dropdown 
+      dropdown-end 
+      sm:inline-block
+      h-12
+    ">
       <label 
         tabIndex={0} 
         className="
@@ -202,9 +209,23 @@ function Dropdown({ auth }) {
           text-xl
           focus:text-primary
       ">
-        <FontAwesomeIcon 
-          icon={faUser} 
-        />
+        { auth?.user?.image ? (
+          <div className='avatar'>
+            <div className='rounded-full'>
+              <img 
+                src={getImageFromDisk(auth.user.image)} 
+                height='100'
+                width='100'
+                className='
+                '
+              />
+            </div>
+          </div>
+        ) : (
+          <FontAwesomeIcon 
+            icon={faUser} 
+          />
+        )}
       </label>
       <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-56 mt-4">
         <LoggedInDropdown auth={auth} />

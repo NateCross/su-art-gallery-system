@@ -261,30 +261,4 @@ class ArtworkController extends Controller
         $img->save($path);
         return $img;
     }
-
-    /**
-     * Search for an artwork by title, author, tags
-     * TODO: Implement tags
-     */
-    // public function search(Request $request)
-    // {
-    //     $input = $request->validate([
-    //         'search' => ['nullable'],
-    //     ]);
-
-    //     if (empty($input)) {
-    //         return redirect()->route('artworks.index');
-    //     }
-
-    //     // Adapts query for LIKE
-    //     $query = '%' . $input['search'] . '%';
-
-    //     $results = Artwork::query()
-    //         ->with('users')
-    //         ->latest()
-    //         ->where('title', 'LIKE', $query)
-    //         ->paginate(15);
-    //     dd($results);
-    //     // return $this->index($results);
-    // }
 }

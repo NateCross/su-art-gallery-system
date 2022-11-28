@@ -39,7 +39,6 @@ export function FormCard({
       <form
         id='artwork-form'
         onSubmit={onSubmit}
-        enctype="multipart/form-data"
         className='
           m-5
           form-control 

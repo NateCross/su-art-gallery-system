@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d582b5e022946a226c4f82a902b99146",
+    "content-hash": "a2fb54ba7ec044279ed468bf426ab059",
     "packages": [
+        {
+            "name": "a6digital/laravel-default-profile-image",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/socialityio/laravel-default-profile-image.git",
+                "reference": "92f46d2f72100959e549b50ba1bc34270dc47d98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/socialityio/laravel-default-profile-image/zipball/92f46d2f72100959e549b50ba1bc34270dc47d98",
+                "reference": "92f46d2f72100959e549b50ba1bc34270dc47d98",
+                "shasum": ""
+            },
+            "require": {
+                "intervention/image": "2.*",
+                "php": ">=5.4.0"
+            },
+            "type": "laravel-library",
+            "autoload": {
+                "psr-0": {
+                    "A6digital\\Image": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hasan Toprakkaya",
+                    "email": "hasan@a6digital.com"
+                }
+            ],
+            "description": "Laravel package to create default profile image using name of user.",
+            "homepage": "https://github.com/a6digital/laravel-default-profile-image",
+            "keywords": [
+                "laravel default profile image"
+            ],
+            "support": {
+                "issues": "https://github.com/a6digital/laravel-default-profile-image/issues",
+                "source": "https://github.com/a6digital/laravel-default-profile-image"
+            },
+            "time": "2018-03-13T16:24:08+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",

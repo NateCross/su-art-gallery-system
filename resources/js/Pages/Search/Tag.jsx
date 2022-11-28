@@ -63,7 +63,7 @@ export default function Tag({ tags }) {
         text-2xl
       '>
         {tags.data.map((data) => (
-          <TagComponent data={data} key={data?.email} />
+          <TagComponent data={data} key={data?.name} />
         ))}
       </ul>
       <div className='

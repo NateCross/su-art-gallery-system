@@ -9,8 +9,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use A6digital\Image\Facades\DefaultProfileImage;
 
 class RegisteredUserController extends Controller
 {
@@ -40,10 +42,13 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $path = $this->createDefaultAvatar($request->name);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'image' => $path,
         ]);
 
         event(new Registered($user));
@@ -60,4 +65,15 @@ class RegisteredUserController extends Controller
             'artworks' => $user->artworks(),
         ]);
     }
+
+    private function createDefaultAvatar(string $name)
+    {
+        $img = DefaultProfileImage::create($name);
+        $path = 'public/avatars/'.$name.'.png';
+        
+        Storage::put($path, $img->encode());
+
+        return $path;
+    }
+
 }

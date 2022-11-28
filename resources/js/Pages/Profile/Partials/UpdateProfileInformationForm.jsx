@@ -6,19 +6,32 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/inertia-react';
 import { Transition } from '@headlessui/react';
 import { FormTextInput } from '@/Components/FormTextInput';
+import { getImageFromDisk } from '@/Utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
+  const avatarUpload = useRef(null);
+
   const user = usePage().props.auth.user;
 
-  const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+  const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
     name: user.name,
     email: user.email,
+    image: null,
+    _method: 'patch', // Allow us to upload image while patching
   });
 
   const submit = (e) => {
     e.preventDefault();
-    patch(route('profile.update'));
+    post(route('profile.update'));
   };
+
+  const clearAvatarUpload = (e) => {
+    e.preventDefault();
+    avatarUpload.current.value = null;
+    setData('image', null);
+  }
 
   return (
     <section className={className}>
@@ -26,7 +39,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         <h2 className="text-lg font-medium">Profile Information</h2>
 
         <p className="mt-1 text-sm">
-          Update your account's name and email address.
+          Update your account's profile picture, name, and email address.
         </p>
       </header>
 
@@ -41,24 +54,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             autoComplete='name'
             error={errors.name}
           />
-          {/* <InputLabel for="name" value="Name" />
-
-          <TextInput
-            id="name"
-            type="text"
-            className="mt-1 block w-full"
-            value={data.name}
-            handleChange={(e) => setData('name', e.target.value)}
-            required
-            autofocus
-            autocomplete="name"
-          />
-
-          <InputError className="mt-2" message={errors.name} /> */}
         </div>
 
         <div>
-
           <FormTextInput
             id='email'
             type='email'
@@ -70,6 +68,59 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             error={errors.email}
           />
         </div>
+
+        <div className='relative'>
+          <label className="label" htmlFor='image'>
+            <span className="label-text">
+              Upload Profile Picture
+            </span>
+          </label>
+          <input
+            id='image'
+            title='image'
+            name='image'
+            accept='image/*'
+            type="file"
+            onChange={e => setData('image', e.target.files[0])}
+            ref={avatarUpload}
+            className="
+              file-input 
+              file-input-bordered 
+              w-full
+              max-w-sm
+          "/>
+          <button
+            onClick={clearAvatarUpload}
+            className='
+              absolute
+              top-[58%]
+              right-[36%]
+            '
+          >
+            <FontAwesomeIcon 
+              icon={faX} 
+              className='
+                transition-all
+                hover:text-primary-focus
+              '
+            />
+          </button>
+          <InputError message={errors.image} className="mt-2" />
+        </div>
+        { /* Image Display */}
+        { (data?.image || user?.image) && (
+          <div className='h-64 w-64 avatar'>
+            <div className='rounded-full'>
+              <img
+                src={data?.image ? (
+                  URL.createObjectURL(data?.image)
+                ) : (
+                  getImageFromDisk(user?.image)
+                )}
+              />
+            </div>
+          </div>
+        )}
 
         {mustVerifyEmail && user.email_verified_at === null && (
           <div>
@@ -93,8 +144,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
           </div>
         )}
 
+
         <div className="flex items-center gap-4">
-          <button 
+          <button
             type="submit"
             className='
               btn 

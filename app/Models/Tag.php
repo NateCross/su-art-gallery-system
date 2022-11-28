@@ -20,4 +20,12 @@ class Tag extends Model
             ->latest()
             ->paginate(15);
     }
+
+    public function artworksSearch()
+    {
+        return $this
+            ->belongsToMany(Artwork::class)
+            ->latest()
+            ->take(4);
+    }
 }

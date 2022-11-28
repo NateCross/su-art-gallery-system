@@ -2,7 +2,7 @@ import { Pagination } from '@/Components/Pagination';
 // import { Artwork as ArtworkComponent } from '../../Components/Artwork';
 import GalleryDisplay from '@/Components/GalleryDisplay'
 import React from 'react'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 

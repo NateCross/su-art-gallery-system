@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -34,10 +35,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request)
     {
-        // $imageFile = $request->image;
-        // unset($request)
-
-        $request->user()->fill($request->validated());
+        $request->user()->fill($request->except(['image']));
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -47,6 +45,14 @@ class ProfileController extends Controller
             Storage::delete($request->user()->image);
 
             $path = $request->file('image')->store('public/avatars');
+
+            // Get the stored image and resize it
+            // then overwrite original image
+            $image = Image::make(str_replace('public', 'storage', $path));
+            $image->fit(512, 512, function($constraint) {
+                $constraint->upsize();
+            });
+            $image->save();
 
             $request->user()->fill([
                 'image' => $path,

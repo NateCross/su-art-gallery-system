@@ -79,6 +79,7 @@ class SearchController extends Controller
             $tags = Tag::query()
                 ->latest()
                 ->where('name', 'LIKE', $search)
+                ->with('artworksSearch')
                 ->paginate(15)
                 ->appends('search', $input);
             
