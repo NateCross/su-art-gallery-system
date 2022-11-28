@@ -78,7 +78,7 @@ export function Search() {
           input 
           input-bordered 
           w-full
-          min-w-[15rem]
+          min-w-[10rem]
           focus:outline-none
           sm:min-w-[20rem]
         '
