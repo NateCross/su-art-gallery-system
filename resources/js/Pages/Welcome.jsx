@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Head } from '@inertiajs/inertia-react';
 
 function Welcome(props) {
+  console.log(props);
   return (
     <>
       <Head title="Welcome" />
@@ -30,28 +31,29 @@ function Welcome(props) {
             >
               View Artworks
             </Link>
-            <div
-              className='
-                flex
-                items-center
-                justify-center
-                gap-3
-              '
-            >
-              <Link
-                href={route('register')}
-                className='btn'
+            { !props?.auth?.user?.id && (
+              <div
+                className='
+                  flex
+                  items-center
+                  justify-center
+                  gap-3
+                '
               >
-                Fine Arts student? Register here
-              </Link>
-              <Link
-                href={route('login')}
-                className='btn'
-              >
-                Login
-              </Link>
-
-            </div>
+                <Link
+                  href={route('register')}
+                  className='btn'
+                >
+                  Fine Arts student? Register here
+                </Link>
+                <Link
+                  href={route('login')}
+                  className='btn'
+                >
+                  Login
+                </Link>
+              </div>
+            )}
 
           </div>
         </div>

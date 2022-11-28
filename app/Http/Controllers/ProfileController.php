@@ -42,7 +42,8 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            Storage::delete($request->user()->image);
+            if ($request->user()->image)
+                Storage::delete($request->user()->image);
 
             $path = $request->file('image')->store('public/avatars');
 
