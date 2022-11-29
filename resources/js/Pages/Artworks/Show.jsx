@@ -151,12 +151,15 @@ function ArtworkInfo({ artwork, isArtist }) {
             text-xl
             underline
             mt-2
-            mb-5
+            mb-3
           '
       >
         {artwork.users[0].name}
       </h2>
     </Link>
+    <p className='mb-3'>
+      {artwork.date}
+    </p>
     <p
       className='
         '
