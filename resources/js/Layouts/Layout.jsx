@@ -209,11 +209,11 @@ function Dropdown({ auth }) {
           text-xl
           focus:text-primary
       ">
-        { auth?.user?.image ? (
+        { auth?.user?.avatar ? (
           <div className='avatar'>
             <div className='rounded-full'>
               <img 
-                src={getImageFromDisk(auth.user.image)} 
+                src={getImageFromDisk(auth.user.avatar)} 
                 height='100'
                 width='100'
                 className='

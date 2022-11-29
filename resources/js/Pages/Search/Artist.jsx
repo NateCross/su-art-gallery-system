@@ -27,7 +27,7 @@ function ArtistComponent({ data }) {
             rounded-full
           '>
             <img 
-              src={getImageFromDisk(data?.image)}
+              src={getImageFromDisk(data?.avatar)}
             />
           </div>
         </div>

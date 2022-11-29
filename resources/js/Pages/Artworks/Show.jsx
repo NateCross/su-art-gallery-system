@@ -63,6 +63,7 @@ function TagDisplay({ tag }) {
     <li
       className='
         badge
+        badge-lg
         text-lg
         transition-all
         hover:text-primary

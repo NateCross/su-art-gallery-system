@@ -35,17 +35,17 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request)
     {
-        $request->user()->fill($request->except(['image']));
+        $request->user()->fill($request->except(['avatar']));
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        if ($request->hasFile('image')) {
-            if ($request->user()->image)
-                Storage::delete($request->user()->image);
+        if ($request->hasFile('avatar')) {
+            if ($request->user()->avatar)
+                Storage::delete($request->user()->avatar);
 
-            $path = $request->file('image')->store('public/avatars');
+            $path = $request->file('avatar')->store('public/avatars');
 
             // Get the stored image and resize it
             // then overwrite original image
@@ -56,7 +56,7 @@ class ProfileController extends Controller
             $image->save();
 
             $request->user()->fill([
-                'image' => $path,
+                'avatar' => $path,
             ]);
         }
 
@@ -76,6 +76,9 @@ class ProfileController extends Controller
         $request->validate([
             'password' => ['required', 'current-password'],
         ]);
+
+        if ($request->user()->avatar)
+            Storage::delete($request->user()->avatar);
 
         $user = $request->user();
 

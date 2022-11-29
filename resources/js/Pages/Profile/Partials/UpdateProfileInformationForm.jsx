@@ -18,7 +18,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
   const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
     name: user.name,
     email: user.email,
-    image: null,
+    avatar: null,
     _method: 'patch', // Allow us to upload image while patching
   });
 
@@ -30,7 +30,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
   const clearAvatarUpload = (e) => {
     e.preventDefault();
     avatarUpload.current.value = null;
-    setData('image', null);
+    setData('avatar', null);
   }
 
   return (
@@ -76,12 +76,12 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </span>
           </label>
           <input
-            id='image'
-            title='image'
-            name='image'
+            id='avatar'
+            title='avatar'
+            name='avatar'
             accept='image/*'
             type="file"
-            onChange={e => setData('image', e.target.files[0])}
+            onChange={e => setData('avatar', e.target.files[0])}
             ref={avatarUpload}
             className="
               file-input 
@@ -105,17 +105,17 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
               '
             />
           </button>
-          <InputError message={errors.image} className="mt-2" />
+          <InputError message={errors.avatar} className="mt-2" />
         </div>
         { /* Image Display */}
-        { (data?.image || user?.image) && (
+        { (data?.avatar || user?.avatar) && (
           <div className='h-64 w-64 avatar'>
             <div className='rounded-full'>
               <img
-                src={data?.image ? (
-                  URL.createObjectURL(data?.image)
+                src={data?.avatar ? (
+                  URL.createObjectURL(data?.avatar)
                 ) : (
-                  getImageFromDisk(user?.image)
+                  getImageFromDisk(user?.avatar)
                 )}
               />
             </div>
