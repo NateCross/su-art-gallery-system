@@ -66,6 +66,7 @@ function Navbar() {
     <div className='
       navbar-center
       dropdown
+      dropdown-end
       sm:hidden
     '>
       <label 
@@ -88,7 +89,8 @@ function Navbar() {
         shadow
         bg-base-300
         rounded-box
-        w-56
+        w-32
+        sm:w-56
         mt-4
       '>
         {Links.map((item) => (
@@ -275,7 +277,7 @@ function Footer() {
 export default function Layout({ children }) {
   const { auth } = usePage().props;
 
-  return <div className='flex flex-col h-screen'>
+  return <div className='flex flex-col h-screen w-screen overflow-hidden'>
     <header
       className='
         navbar

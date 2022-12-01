@@ -38,6 +38,7 @@ function Welcome(props) {
                   items-center
                   justify-center
                   gap-3
+                  flex-wrap
                 '
               >
                 <Link
