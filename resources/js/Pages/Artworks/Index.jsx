@@ -10,14 +10,6 @@ export default function Index({ auth, artworks }) {
     <>
       <Head title="Artworks" />
 
-      {/* <Link
-        className={`
-          btn btn-primary ${!auth?.user ? 'invisible' : ''}
-        `}
-        href='/artworks/create'
-      >
-        Add Artwork
-      </Link> */}
       { artworks.data.length === 0 ? <>
         <div className='
           h-full
@@ -34,11 +26,22 @@ export default function Index({ auth, artworks }) {
           '>
             No Artworks Found
           </h1>
-          <p className='
-            text-lg
-          '>
-            Login to an account to add artworks
-          </p>
+          { auth?.user?.id ? (
+            <Link
+              className={`
+                btn btn-primary ${!auth?.user ? 'invisible' : ''}
+              `}
+              href='/artworks/create'
+            >
+              Add Artwork
+            </Link>
+          ) : (
+            <p className='
+              text-lg
+            '>
+              Login to an account to add artworks
+            </p>
+          )}
         </div>
       </> : (
         <GalleryDisplay artworks={artworks} />
