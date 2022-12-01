@@ -155,7 +155,10 @@ export function FormCard({
               id='tag'
               name='tag'
               value={tagInput}
-              onChange={(e) => { setTagInput(e.target.value); }} />
+              onChange={(e) => {
+                 if (e?.target?.value) 
+                  setTagInput(e?.target?.value); 
+              }} />
             <button
               type="submit"
               className='

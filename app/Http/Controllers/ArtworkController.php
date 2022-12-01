@@ -61,6 +61,8 @@ class ArtworkController extends Controller
      */
     public function store(Request $request)
     {
+        $tags = null;
+
         $validatedData = $request->validate([
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
@@ -98,8 +100,10 @@ class ArtworkController extends Controller
 
         // Separate the tags from the validated data
         // Since that is not an attribute in the artwork
-        $tags = $validatedData['tags'];
-        unset($validatedData['tags']);
+        if (in_array('tags', $validatedData)) {
+            $tags = $validatedData['tags'];
+            unset($validatedData['tags']);
+        }
 
         $art = Artwork::create($validatedData);
 
@@ -107,11 +111,13 @@ class ArtworkController extends Controller
         $art->users()->attach($request->user()->id);
 
         // Attach tags
-        foreach ($tags as $tag) {
-            $sync = Tag::firstOrCreate([
-                'name' => $tag
-            ]);
-            $art->tags()->attach($sync);
+        if ($tags) {
+            foreach ($tags as $tag) {
+                $sync = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $art->tags()->attach($sync);
+            }
         }
 
         return redirect()->route('artworks.index');

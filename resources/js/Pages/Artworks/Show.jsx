@@ -92,9 +92,10 @@ function ArtworkInfo({ artwork, isArtist }) {
         rounded-3xl
         bg-base-300
         w-4/5
-        h-[750px]
+        max-w-[1000px]
         grid
         place-items-center
+        grid-cols-1
       '>
         <img
           src={getImageFromDisk(artwork?.path)}
@@ -170,7 +171,13 @@ function ArtworkInfo({ artwork, isArtist }) {
     {lightboxIsOpen && (
       <Lightbox
         mainSrc={getImageFromDisk(artwork?.path)}
-        onCloseRequest={() => setLightboxIsOpen(false)}
+        onCloseRequest={() => {
+          setLightboxIsOpen(false);
+          document.body.style.overflow = '';
+        }}
+        onAfterOpen={() => {
+          document.body.style.overflow = 'hidden';
+        }}
       />
     )}
   </div>

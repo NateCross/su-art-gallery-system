@@ -277,7 +277,7 @@ function Footer() {
 export default function Layout({ children }) {
   const { auth } = usePage().props;
 
-  return <div className='flex flex-col h-screen w-screen'>
+  return <div className='flex flex-col h-screen w-screen sm:w-auto'>
     <header
       className='
         navbar

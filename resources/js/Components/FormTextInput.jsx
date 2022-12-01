@@ -38,7 +38,7 @@ export function FormTextInput({
           w-full 
         `}
         required={required} />
-      {type === 'date' && (
+      {/* {type === 'date' && (
         <FontAwesomeIcon
           icon={faCalendar}
           className='
@@ -49,7 +49,7 @@ export function FormTextInput({
             -translate-y-1/2
             pointer-events-none
           '/>
-      )}
+      )} */}
     </div>
 
     <InputError message={error} className="mt-2" />
