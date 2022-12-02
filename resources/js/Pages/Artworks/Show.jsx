@@ -95,7 +95,8 @@ function ArtworkInfo({ artwork, isArtist }) {
       place-items-center
     '>
       <div className='
-        p-10
+        p-5
+        sm:p-10
         rounded-3xl
         bg-base-300
         w-4/5
@@ -133,6 +134,7 @@ function ArtworkInfo({ artwork, isArtist }) {
       {isArtist && (
         <div className='
           flex
+          flex-wrap
           items-center
           gap-4
         '>
