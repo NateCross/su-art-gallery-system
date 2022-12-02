@@ -32,7 +32,7 @@ return new class extends Migration
             $table->integer('thumbnail_height');
 
             $table->string('alt_text')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->date('date');
             $table->timestamps();
         });

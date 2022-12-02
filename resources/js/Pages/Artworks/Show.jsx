@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { getImageFromDisk } from '../../Utils';
 import Lightbox from 'react-18-image-lightbox';
 import { Inertia } from '@inertiajs/inertia';
+import { Head } from '@inertiajs/inertia-react';
 
 // Fixes weird bug in Lightbox where global is not defined
 window.global = window;
@@ -89,7 +90,6 @@ function ArtworkImage({ artwork }) {
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   return <>
     <div className='
-      w-full
       grid
       place-items-center
     '>
@@ -187,6 +187,7 @@ function ArtworkInfo({ artwork, isArtist }) {
     </p>
     <p
       className='
+          prose
         '
     >
       {artwork.description}
@@ -209,7 +210,9 @@ export default function Show({ auth, artwork }) {
   console.log(artwork);
   const isArtist = artwork.users[0].id === auth?.user?.id;
 
-  return (
+  return <>
+    <Head title={artwork?.title} />
+
     <div className='
       m-5
       flex
@@ -242,6 +245,7 @@ export default function Show({ auth, artwork }) {
       <div className='hidden sm:divider sm:divider-horizontal' ></div>
       <div className='
         sm:basis-2/3
+        min-w-0
       '>
         <ArtworkImage artwork={artwork} />
       </div>
@@ -261,5 +265,5 @@ export default function Show({ auth, artwork }) {
         Back
       </Link>
     </div>
-  )
+  </>
 }

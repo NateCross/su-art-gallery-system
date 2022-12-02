@@ -4,6 +4,7 @@ import GalleryDisplay from '@/Components/GalleryDisplay'
 import React from 'react'
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Head } from '@inertiajs/inertia-react';
 
 
 export default function Artwork({ artworks }) {
@@ -11,6 +12,7 @@ export default function Artwork({ artworks }) {
   const searchParams = new URLSearchParams(window.location.search);
   const searchQuery = searchParams.get('search');
   return <>
+    <Head title={searchQuery} />
     <div className='
       mx-5
       w-fit

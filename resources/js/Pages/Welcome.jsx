@@ -23,7 +23,7 @@ function Welcome(props) {
               Silliman Online Art Portfolio
             </h2>
             <p className="py-6">
-              The online showcase for Silliman University Fine Arts
+              The online showcase for Sillimanian Artists
             </p>
             <Link
               href={route('artworks.index')}
@@ -45,7 +45,7 @@ function Welcome(props) {
                   href={route('register')}
                   className='btn'
                 >
-                  Fine Arts student? Register here
+                  Register
                 </Link>
                 <Link
                   href={route('login')}

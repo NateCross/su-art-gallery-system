@@ -67,7 +67,7 @@ export function Search() {
 
     <form 
       onSubmit={submit}
-      className='relative input-group gap-px'
+      className='relative input-group gap-px text-base-content'
     >
       <input
         type="search"

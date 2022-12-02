@@ -1,5 +1,6 @@
 import { Pagination } from '@/Components/Pagination';
 import { getImageFromDisk } from '@/Utils';
+import { Head } from '@inertiajs/inertia-react';
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react'
 
@@ -86,6 +87,7 @@ export default function Tag({ tags }) {
   const searchParams = new URLSearchParams(window.location.search);
   const searchQuery = searchParams.get('search');
   return <>
+    <Head title={searchQuery} />
     <div className='
       mx-5
       w-fit

@@ -1,12 +1,14 @@
 import { Link } from '@inertiajs/inertia-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faPlus, } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { getImageFromDisk } from '@/Utils';
 import { faReact, faLaravel } from '@fortawesome/free-brands-svg-icons';
+import { themeChange } from 'theme-change';
+
 
 function LogoLink() {
   return (
@@ -17,8 +19,9 @@ function LogoLink() {
           btn-ghost 
           uppercase
           text-2xl
-          text-red-700
+          text-primary-content
           font-bold
+          hover:text-neutral-content
         '
         href='/'
       >
@@ -42,7 +45,10 @@ function NavLink({ name, routeLink, isActive, isTab = false }) {
           ${isTab && 'tab tab-bordered'}
           ${styles}
           text-lg
-          ${(!isTab & isActive) && 'text-primary'}
+          ${(!isTab & isActive) && 'text-secondary'}
+          text-base-content
+          sm:text-primary-content
+          sm:hover:text-neutral-content
         `}
       >
         {name}
@@ -77,7 +83,7 @@ function Navbar() {
           btn-ghost 
           btn-circle
           text-xl
-          focus:text-primary
+          focus:text-neutral
       ">
         <FontAwesomeIcon 
           icon={faBars} 
@@ -169,6 +175,25 @@ function LoggedInDropdown({ auth }) {
         Log Out
       </Link>
     </li>
+    <div className="divider my-1" />
+    <li>
+      <button
+        data-toggle-theme='light,dark'
+        data-act-class="ACTIVECLASS"
+        className='
+          btn
+          btn-ghost
+          btn-circle
+          gap-2
+          w-full
+          align-middle
+        '
+      >
+        <FontAwesomeIcon icon={faSun} />
+        /
+        <FontAwesomeIcon icon={faMoon} />
+      </button>
+    </li>
   </>
 }
 
@@ -190,6 +215,9 @@ function GuestDropdown({ auth }) {
         Login
       </Link>
     </li>
+    {/* <div className="divider my-1" />
+    <li>
+    </li> */}
   </>
 }
 
@@ -202,6 +230,7 @@ function Dropdown({ auth }) {
       dropdown-end 
       sm:inline-block
       h-12
+      z-[1000]
     ">
       <label 
         tabIndex={0} 
@@ -230,7 +259,7 @@ function Dropdown({ auth }) {
           />
         )}
       </label>
-      <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-56 mt-4">
+      <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-56 mt-4 text-base-content">
         <LoggedInDropdown auth={auth} />
         <GuestDropdown auth={auth} />
       </ul>
@@ -271,7 +300,9 @@ function Footer() {
 
           by <a href='https://www.facebook.com/nathanangelocruz' className='inline-block underline' > Nathan Cruz  </a> and <a href='https://www.facebook.com/dane.dedoroy' className='inline-block underline' > Dane Dedoroy </a>
         </p>
+
       </div>
+
 
     </footer>
   </>
@@ -279,12 +310,16 @@ function Footer() {
 
 export default function Layout({ children }) {
   const { auth } = usePage().props;
+  useEffect(() => {
+    themeChange(false)
+  }, []);
 
   return <div className='flex flex-col h-screen w-screen sm:w-auto'>
     <header
       className='
         navbar
-        bg-base-300
+        bg-primary
+        text-primary-content
         mb-5
       '
     >

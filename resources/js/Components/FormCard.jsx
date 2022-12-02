@@ -14,7 +14,9 @@ export function FormCard({
   const addTag = (e) => {
     e.preventDefault();
 
-    if (data.tags.includes(tagInput))
+    if (data.tags.includes(tagInput)
+      || tagInput === ''
+    )
       return;
 
     setData('tags', [...data.tags, tagInput]);
@@ -156,8 +158,7 @@ export function FormCard({
               name='tag'
               value={tagInput}
               onChange={(e) => {
-                 if (e?.target?.value) 
-                  setTagInput(e?.target?.value); 
+                setTagInput(e?.target?.value); 
               }} />
             <button
               type="submit"
