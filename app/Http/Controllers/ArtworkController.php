@@ -66,7 +66,7 @@ class ArtworkController extends Controller
         $validatedData = $request->validate([
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
-            'date' => ['required'],
+            'date' => ['required', 'date'],
             'description' => ['nullable'],
             'alt_text' => ['nullable'],
             'tags' => ['nullable', 'array'],
@@ -180,7 +180,7 @@ class ArtworkController extends Controller
         $validatedData = $request->validate([
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'title' => ['required'],
-            'date' => ['required'],
+            'date' => ['required', 'date'],
             'description' => ['nullable'],
             'alt_text' => ['nullable'],
             'tags' => ['nullable', 'array'],

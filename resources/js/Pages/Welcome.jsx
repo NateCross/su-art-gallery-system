@@ -16,7 +16,7 @@ function Welcome(props) {
             <h1 className="text-6xl font-bold max-w-lg text-red-700">SOAP
             </h1>
             <h2 className='
-              text-primary-content
+              text-info
               text-3xl
               font-bold
             '>

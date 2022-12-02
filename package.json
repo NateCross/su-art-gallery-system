@@ -25,11 +25,13 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.2.1",
+        "@fortawesome/free-brands-svg-icons": "^6.2.1",
         "@fortawesome/free-solid-svg-icons": "^6.2.1",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "daisyui": "^2.41.0",
         "react-18-image-lightbox": "^5.1.4",
         "react-grid-gallery": "^1.0.0",
+        "theme-change": "^2.2.0",
         "tw-elements": "^1.0.0-alpha12"
     }
 }

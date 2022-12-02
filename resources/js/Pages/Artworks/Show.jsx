@@ -4,9 +4,16 @@ import { Link } from '@inertiajs/inertia-react';
 import React, { useState } from 'react'
 import { getImageFromDisk } from '../../Utils';
 import Lightbox from 'react-18-image-lightbox';
+import { Inertia } from '@inertiajs/inertia';
 
 // Fixes weird bug in Lightbox where global is not defined
 window.global = window;
+
+// When you exit while in the Lightbox, the scroll is still
+// frozen. This prevents that.
+Inertia.on('navigate', () => {
+  document.body.style.overflow = '';
+});
 
 function DeleteModal({ artwork }) {
   return (

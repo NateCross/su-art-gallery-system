@@ -56,7 +56,7 @@ export function FormCard({
                   *
                 </span>
               )}
-              Upload Artwork Image
+              Upload Artwork Image (Max. 10MB)
             </span>
           </label>
           <input

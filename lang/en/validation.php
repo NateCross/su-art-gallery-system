@@ -158,6 +158,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'image' => [
+            'max' => 'The image size must be 10MB or less.',
+        ],
     ],
 
     /*

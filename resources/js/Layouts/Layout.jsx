@@ -1,11 +1,12 @@
 import { Link } from '@inertiajs/inertia-react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faCoffee, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faPlus, } from '@fortawesome/free-solid-svg-icons';
 import { usePage } from '@inertiajs/inertia-react';
 import { Search } from '../Components/Search';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { getImageFromDisk } from '@/Utils';
+import { faReact, faLaravel } from '@fortawesome/free-brands-svg-icons';
 
 function LogoLink() {
   return (
@@ -263,10 +264,12 @@ function Footer() {
       '
     >
       <div className="items-center">
-        <p>
+        <p className='text-sm'>
           Made with
-          <FontAwesomeIcon icon={faCoffee} className='mx-2' />
-          by Nathan Cruz and Dane Dedoroy
+          <FontAwesomeIcon icon={faReact} className='mx-1' />
+          <FontAwesomeIcon icon={faLaravel} className='mx-1' />
+
+          by <a href='https://www.facebook.com/nathanangelocruz' className='inline-block underline' > Nathan Cruz  </a> and <a href='https://www.facebook.com/dane.dedoroy' className='inline-block underline' > Dane Dedoroy </a>
         </p>
       </div>
 

@@ -78,8 +78,9 @@ export function Search() {
           input 
           input-bordered 
           w-full
-          min-w-[10rem]
+          min-w-[7rem]
           focus:outline-none
+          text-sm
           sm:min-w-[20rem]
         '
         value={data?.search}
@@ -93,6 +94,7 @@ export function Search() {
           select
           select-bordered
           focus:outline-none
+          pr-8
         '
         title='Query to Search'
         value={data?.option}
@@ -109,7 +111,8 @@ export function Search() {
         className='
           flex
           items-center
-          px-3
+          px-[0.3rem]
+          sm:px-3
           btn
           transition-all
           hover:text-primary
