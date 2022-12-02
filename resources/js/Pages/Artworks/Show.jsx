@@ -85,10 +85,9 @@ function TagDisplay({ tag }) {
   )
 }
 
-function ArtworkInfo({ artwork, isArtist }) {
+function ArtworkImage({ artwork }) {
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
-
-  return <div>
+  return <>
     <div className='
       w-full
       grid
@@ -96,7 +95,6 @@ function ArtworkInfo({ artwork, isArtist }) {
     '>
       <div className='
         p-5
-        sm:p-10
         rounded-3xl
         bg-base-300
         w-4/5
@@ -120,8 +118,25 @@ function ArtworkInfo({ artwork, isArtist }) {
         />
       </div>
 
+    {lightboxIsOpen && (
+      <Lightbox
+        mainSrc={getImageFromDisk(artwork?.path)}
+        onCloseRequest={() => {
+          setLightboxIsOpen(false);
+          document.body.style.overflow = '';
+        }}
+        onAfterOpen={() => {
+          document.body.style.overflow = 'hidden';
+        }}
+      />
+    )}
     </div>
-    <div className='flex gap-5 items-center mt-5'>
+  </>
+}
+
+function ArtworkInfo({ artwork, isArtist }) {
+  return <div>
+    <div className='flex gap-x-5 items-center mt-5 flex-wrap'>
       <h1
         className='
             font-bold
@@ -177,18 +192,16 @@ function ArtworkInfo({ artwork, isArtist }) {
       {artwork.description}
     </p>
 
-    {lightboxIsOpen && (
-      <Lightbox
-        mainSrc={getImageFromDisk(artwork?.path)}
-        onCloseRequest={() => {
-          setLightboxIsOpen(false);
-          document.body.style.overflow = '';
-        }}
-        onAfterOpen={() => {
-          document.body.style.overflow = 'hidden';
-        }}
-      />
-    )}
+    <ul className='
+      flex
+      gap-1
+      my-5
+    '>
+      {artwork?.tags && artwork.tags.map((tag) => (
+        <TagDisplay tag={tag} key={tag?.name} />
+      ))}
+    </ul>
+
   </div>
 }
 
@@ -199,7 +212,40 @@ export default function Show({ auth, artwork }) {
   return (
     <div className='
       m-5
+      flex
+      flex-col-reverse
+      sm:flex-row
+      sm:w-full
     '>
+      <div className='
+        sm:basis-1/4
+      '>
+        <Link
+          href={route('artworks.index')}
+          className='
+            btn
+            text-lg
+            gap-2
+            mb-5
+            hidden
+            align-middle
+            w-fit
+            sm:flex
+          '
+        >
+          <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+          Back
+        </Link>
+
+        <ArtworkInfo artwork={artwork} isArtist={isArtist} />
+      </div>
+      <div className='hidden sm:divider sm:divider-horizontal' ></div>
+      <div className='
+        sm:basis-2/3
+      '>
+        <ArtworkImage artwork={artwork} />
+      </div>
+
       <Link
         href={route('artworks.index')}
         className='
@@ -207,24 +253,13 @@ export default function Show({ auth, artwork }) {
           text-lg
           gap-2
           mb-5
+          sm:hidden
+          w-fit
         '
       >
         <FontAwesomeIcon icon={faArrowAltCircleLeft} />
         Back
       </Link>
-
-      <ArtworkInfo artwork={artwork} isArtist={isArtist} />
-
-      <ul className='
-        flex
-        gap-1
-        my-5
-      '>
-        {artwork?.tags && artwork.tags.map((tag) => (
-          <TagDisplay tag={tag} key={tag?.name} />
-        ))}
-      </ul>
-
     </div>
   )
 }
