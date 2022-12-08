@@ -83,7 +83,6 @@ function TagComponent({ data }) {
 }
 
 export default function Tag({ tags }) {
-  console.log(tags);
   const searchParams = new URLSearchParams(window.location.search);
   const searchQuery = searchParams.get('search');
   return <>

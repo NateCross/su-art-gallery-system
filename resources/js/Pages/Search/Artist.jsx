@@ -45,7 +45,6 @@ function ArtistComponent({ data }) {
 }
 
 export default function Artist({ artists }) {
-  console.log(artists);
   const searchParams = new URLSearchParams(window.location.search);
   const searchQuery = searchParams.get('search');
   return <>

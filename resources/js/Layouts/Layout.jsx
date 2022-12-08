@@ -215,15 +215,11 @@ function GuestDropdown({ auth }) {
         Login
       </Link>
     </li>
-    {/* <div className="divider my-1" />
-    <li>
-    </li> */}
   </>
 }
 
 function Dropdown({ auth }) {
   // if (!auth?.user) return null;
-  console.log(auth.user)
   return (
     <div className="
       dropdown 

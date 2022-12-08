@@ -29,8 +29,6 @@ export default function Edit({ auth, artwork }) {
   // We use an input ref so we can manually reset file input
   // const fileInputRef = useRef(null);
 
-  console.log(artwork);
-
   /** FUNCTIONS */
   const submit = (e) => {
     e.preventDefault();

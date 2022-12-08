@@ -4,8 +4,6 @@ import { Pagination } from '../../Components/Pagination';
 import GalleryDisplay from '@/Components/GalleryDisplay';
 
 export default function Index({ auth, artworks }) {
-  console.log(artworks);
-
   return (
     <>
       <Head title="Artworks" />

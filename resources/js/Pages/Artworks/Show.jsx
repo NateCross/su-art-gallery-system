@@ -207,7 +207,6 @@ function ArtworkInfo({ artwork, isArtist }) {
 }
 
 export default function Show({ auth, artwork }) {
-  console.log(artwork);
   const isArtist = artwork.users[0].id === auth?.user?.id;
 
   return <>

@@ -16,7 +16,6 @@ export default function Login({ status, canResetPassword }) {
   }, []);
 
   const onHandleChange = (event) => {
-    console.log(event);
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
 

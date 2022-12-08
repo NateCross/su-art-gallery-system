@@ -8,7 +8,6 @@ import { Head } from '@inertiajs/inertia-react';
 
 
 export default function Artwork({ artworks }) {
-  console.log(artworks);
   const searchParams = new URLSearchParams(window.location.search);
   const searchQuery = searchParams.get('search');
   return <>
