@@ -36,22 +36,23 @@ export default function Edit({ auth, artwork }) {
       <div className='
         w-full
         h-max
-        lg:grid
         mt-5
         px-10
         gap-10
-        lg:grid-cols-2
         flex
         flex-col
+        items-center
+        justify-center
       '>
         <FormCard
           data={data}
           setData={setData}
           onSubmit={submit}
           errors={errors}
+          artwork={artwork}
           uploadRequired
         />
-        <ImagePreviewCard artwork={artwork} data={data} />
+        {/* <ImagePreviewCard artwork={artwork} data={data} /> */}
       </div>
     </>
   )

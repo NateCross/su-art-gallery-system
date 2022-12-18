@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import InputError from '@/Components/InputError';
 import { FormTextInput } from '@/Components/FormTextInput';
+import { ImagePreviewCard } from './ImagePreviewCard';
 
 export function FormCard({ 
   data, 
   setData, 
   errors, 
   onSubmit, 
+  artwork,
   uploadRequired = false,
 }) {
   const [tagInput, setTagInput] = useState('');
@@ -33,6 +35,7 @@ export function FormCard({
     <div className='
       flex-none
       h-fit
+      w-1/2
       basis-1/2
       card
       bg-base-300
@@ -44,7 +47,7 @@ export function FormCard({
         className='
           m-5
           form-control 
-          max-w-lg
+          max-w-full
           gap-2
           mb-0
       '>
@@ -77,6 +80,8 @@ export function FormCard({
           "/>
           <InputError message={errors.image} className="mt-2" />
         </div>
+
+        <ImagePreviewCard artwork={artwork} data={data} />
 
         <FormTextInput
           value={data.title}

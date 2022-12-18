@@ -96,7 +96,6 @@ function ArtworkImage({ artwork }) {
       <div className='
         p-5
         rounded-3xl
-        bg-base-300
         w-4/5
         max-w-[1000px]
         grid
@@ -112,8 +111,7 @@ function ArtworkImage({ artwork }) {
           className='
             cursor-zoom-in
             object-contain
-            w-full
-            h-full
+            sm:h-[75vh]
           '
         />
       </div>
@@ -185,16 +183,22 @@ function ArtworkInfo({ artwork, isArtist }) {
     <p className='mb-3'>
       {artwork.date}
     </p>
-    <p
-      className='
-          prose
-        '
-    >
-      {artwork.description}
-    </p>
+    <div className='
+      overflow-y-auto
+      max-h-[40vh]
+    '>
+      <p
+        className='
+            prose
+          '
+      >
+        {artwork.description}
+      </p>
+    </div>
 
     <ul className='
       flex
+      flex-wrap
       gap-1
       my-5
     '>
@@ -217,7 +221,6 @@ export default function Show({ auth, artwork }) {
       flex
       flex-col-reverse
       sm:flex-row
-      sm:w-full
     '>
       <div className='
         sm:basis-1/4
@@ -244,7 +247,9 @@ export default function Show({ auth, artwork }) {
       <div className='hidden sm:divider sm:divider-horizontal' ></div>
       <div className='
         sm:basis-2/3
+        flex-wrap
         min-w-0
+        max-w-full
       '>
         <ArtworkImage artwork={artwork} />
       </div>

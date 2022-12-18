@@ -9,12 +9,12 @@ export function ImagePreviewCard({ artwork, data }) {
       flex-none
       basis-1/2
       card
-      bg-base-300
+      bg-base-100
       rounded-box
       object-contain
       overflow-clip
       relative
-      h-fit
+      mt-5
     '>
       { data?.image || artwork?.path ? <>
         <p
@@ -37,12 +37,13 @@ export function ImagePreviewCard({ artwork, data }) {
             getImageFromDisk(artwork.path)
           )}
           className='
-            h-full
+            object-contain
+            h-80
             w-auto
           '/>
       </> : (
         <div className='
-            h-52
+            h-80
             grid
             place-items-center
           '
