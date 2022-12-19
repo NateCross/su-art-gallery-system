@@ -96,11 +96,12 @@ function ArtworkImage({ artwork }) {
       <div className='
         p-5
         rounded-3xl
-        w-4/5
-        max-w-[1000px]
         grid
         place-items-center
         grid-cols-1
+        bg-base-300
+        h-fit
+        w-fit
       '>
         <img
           src={getImageFromDisk(artwork?.path)}
@@ -111,6 +112,7 @@ function ArtworkImage({ artwork }) {
           className='
             cursor-zoom-in
             object-contain
+            w-full
             sm:h-[75vh]
           '
         />

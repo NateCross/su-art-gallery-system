@@ -52,7 +52,6 @@ export default function Edit({ auth, artwork }) {
           artwork={artwork}
           uploadRequired
         />
-        {/* <ImagePreviewCard artwork={artwork} data={data} /> */}
       </div>
     </>
   )
