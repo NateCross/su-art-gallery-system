@@ -113,7 +113,7 @@ function ArtworkImage({ artwork }) {
             cursor-zoom-in
             object-contain
             w-full
-            sm:h-[75vh]
+            sm:max-h-[75vh]
           '
         />
       </div>
