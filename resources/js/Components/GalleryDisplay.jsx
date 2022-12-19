@@ -4,6 +4,7 @@ import { Link } from '@inertiajs/inertia-react';
 import { Pagination } from './Pagination';
 
 function ImageComponent(props) {
+  console.log(props.item);
   return (
     <Link
       href={props.item.href}
@@ -11,13 +12,38 @@ function ImageComponent(props) {
       className='
       '
     >
-      <img {...props.imageProps} />
+      {props?.item?.is_nsfw === 1 && (
+        <div className='
+          absolute
+          top-1/2
+          left-1/2
+          -translate-x-1/2
+          -translate-y-1/2
+          z-50
+          p-2
+          bg-error
+          font-bold
+          text-xl
+          rounded-xl
+        '>
+          NSFW
+        </div>
+      )}
+      <img 
+        {...props.imageProps} 
+        style={{
+          filter: props?.item?.is_nsfw === 1 && (
+            'blur(10px)'
+          )
+        }}
+      />
     </Link>
   )
 }
 
-export default function GalleryDisplay({ artworks }) {
+export default function GalleryDisplay({ auth, artworks }) {
   if (artworks.data.length <= 0) return;
+  console.log(auth);
 
   const galleryArtworks = artworks.data.map((data) => (
     {
@@ -27,7 +53,8 @@ export default function GalleryDisplay({ artworks }) {
       width: data.thumbnail_width,
       alt: data.alt_text,
       href: route('artworks.show', data.id),
-      tags: data.tags.map((tag) => (
+      is_nsfw: !auth?.user?.nsfw_enabled && data?.is_nsfw,
+      tags: (!data?.is_nsfw || auth?.user?.nsfw_enabled) && data.tags.map((tag) => (
         {
           value: (
             <Link
@@ -75,6 +102,7 @@ export default function GalleryDisplay({ artworks }) {
           opacity-[15%]
           transition-all
           absolute
+          z-50
         '>
         </div>
         <div
@@ -86,6 +114,7 @@ export default function GalleryDisplay({ artworks }) {
             transform
             -translate-y-full
             text-center
+            z-50
         '>
           <p
             className='

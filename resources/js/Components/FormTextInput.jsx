@@ -38,18 +38,6 @@ export function FormTextInput({
           w-full 
         `}
         required={required} />
-      {/* {type === 'date' && (
-        <FontAwesomeIcon
-          icon={faCalendar}
-          className='
-            absolute
-            right-3
-            top-1/2
-            transform
-            -translate-y-1/2
-            pointer-events-none
-          '/>
-      )} */}
     </div>
 
     <InputError message={error} className="mt-2" />

@@ -20,6 +20,7 @@ export default function Edit({ auth, artwork }) {
     image: null,
     alt_text: '',
     date: '',
+    is_nsfw: false,
     tags: [],
   });
 

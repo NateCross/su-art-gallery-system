@@ -17,7 +17,7 @@ const SearchDropdown = forwardRef(({ children }, ref) => {
           btn-ghost
           btn-circle
           text-xl
-          focus:text-primary
+          focus:text-base-content
         "
       >
         <FontAwesomeIcon icon={faMagnifyingGlass} />

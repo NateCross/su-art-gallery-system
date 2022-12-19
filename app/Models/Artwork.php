@@ -26,6 +26,7 @@ class Artwork extends Model
         'thumbnail',
         'thumbnail_width',
         'thumbnail_height',
+        'is_nsfw',
     ];
 
     /**

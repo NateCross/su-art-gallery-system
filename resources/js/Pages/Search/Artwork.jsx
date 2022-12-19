@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Head } from '@inertiajs/inertia-react';
 
 
-export default function Artwork({ artworks }) {
+export default function Artwork({ auth, artworks }) {
   const searchParams = new URLSearchParams(window.location.search);
   const searchQuery = searchParams.get('search');
   return <>
@@ -44,7 +44,7 @@ export default function Artwork({ artworks }) {
           </h1>
         </div>
       </> : (
-        <GalleryDisplay artworks={artworks} />
+        <GalleryDisplay auth={auth} artworks={artworks} />
       )}
   </>
 }

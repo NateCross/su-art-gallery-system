@@ -23,6 +23,7 @@ class User extends \TCG\Voyager\Models\User
         'password',
         'type',
         'avatar',
+        'nsfw_enabled',
     ];
 
     /**

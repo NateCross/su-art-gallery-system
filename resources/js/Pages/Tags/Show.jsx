@@ -2,7 +2,7 @@ import { Head } from '@inertiajs/inertia-react';
 import React from 'react'
 import GalleryDisplay from '@/Components/GalleryDisplay';
 
-export default function Show({ tag, artworks }) {
+export default function Show({ auth, tag, artworks }) {
   return <>
     <Head 
       title={tag?.name}
@@ -17,6 +17,6 @@ export default function Show({ tag, artworks }) {
     >
       {tag?.name}
     </h1>
-    <GalleryDisplay artworks={artworks} />
+    <GalleryDisplay auth={auth} artworks={artworks} />
   </>
 }

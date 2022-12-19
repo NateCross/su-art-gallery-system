@@ -185,6 +185,18 @@ function ArtworkInfo({ artwork, isArtist }) {
     <p className='mb-3'>
       {artwork.date}
     </p>
+
+    <div className='mb-3'>
+      {artwork?.is_nsfw === 1 && (
+        <div className='
+          badge
+          badge-error
+        '>
+          NSFW
+        </div>
+      )}
+    </div>
+
     <div className='
       overflow-y-auto
       max-h-[40vh]

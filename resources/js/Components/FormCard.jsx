@@ -35,8 +35,9 @@ export function FormCard({
     <div className='
       flex-none
       h-fit
-      w-1/2
-      basis-1/2
+      sm:w-2/3
+      lg:w-1/2
+      sm:basis-1/2
       card
       bg-base-300
       rounded-box
@@ -130,7 +131,28 @@ export function FormCard({
           label='Alt. Text'
           onChange={e => setData('alt_text', e.target.value)}
           error={errors.alt_text} />
+
+        { /* NSFW Checkbox */ }
+        <div className='flex items-center gap-1'>
+          <label className="label cursor-pointer" htmlFor='is_nsfw'>
+            <span className="label-text">
+              Not Safe for Work (NSFW)
+            </span>
+          </label>
+          <input
+            id='is_nsfw'
+            title='is_nsfw'
+            name='is_nsfw'
+            type="checkbox"
+            onChange={() => setData('is_nsfw', !data?.is_nsfw)}
+            value={data?.is_nsfw}
+            className="
+              checkbox
+          "/>
+          <InputError message={errors.is_nsfw} className="mt-2" />
+        </div>
       </form>
+
 
       {/* Making another form to handle Tag inputs
                  This allows users to simply press Enter to
@@ -142,7 +164,7 @@ export function FormCard({
           form-control 
           max-w-lg
           gap-2
-          mt-2
+          mt-px
       '>
         <div>
           <label htmlFor="tag" className='label'>

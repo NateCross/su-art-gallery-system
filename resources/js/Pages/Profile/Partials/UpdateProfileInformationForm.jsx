@@ -19,6 +19,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     name: user.name,
     email: user.email,
     avatar: null,
+    nsfw_enabled: user?.nsfw_enabled,
     _method: 'patch', // Allow us to upload image while patching
   });
 
@@ -39,7 +40,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         <h2 className="text-lg font-medium">Profile Information</h2>
 
         <p className="mt-1 text-sm">
-          Update your account's profile picture, name, and email address.
+          Update your account's profile picture, name, NSFW filter, and email address.
         </p>
       </header>
 
@@ -69,6 +70,26 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
           />
         </div>
 
+        { /* NSFW Checkbox */ }
+        <div className='flex items-center gap-1'>
+          <label className="label cursor-pointer" htmlFor='nsfw_enabled'>
+            <span className="label-text">
+              Not Safe for Work (NSFW) Enabled
+            </span>
+          </label>
+          <input
+            id='nsfw_enabled'
+            title='Enable NSFW Artworks'
+            name='nsfw_enabled'
+            type="checkbox"
+            onChange={() => setData('nsfw_enabled', !data?.nsfw_enabled)}
+            checked={data?.nsfw_enabled}
+            className="
+              checkbox
+          "/>
+          <InputError message={errors.nsfw_enabled} className="mt-2" />
+        </div>
+
         <div className='relative'>
           <label className="label" htmlFor='image'>
             <span className="label-text">
@@ -94,7 +115,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             className='
               absolute
               top-[58%]
-              right-[36%]
+              right-[4%]
+              sm:right-[36%]
             '
           >
             <FontAwesomeIcon 

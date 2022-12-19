@@ -48,7 +48,7 @@ export default function Show({ auth, artist, artworks }) {
           )}
         </div>
       </> : (
-        <GalleryDisplay artworks={artworks} />
+        <GalleryDisplay auth={auth} artworks={artworks} />
       )}
 
     </>

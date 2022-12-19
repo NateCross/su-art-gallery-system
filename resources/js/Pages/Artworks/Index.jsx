@@ -42,7 +42,7 @@ export default function Index({ auth, artworks }) {
           )}
         </div>
       </> : (
-        <GalleryDisplay artworks={artworks} />
+        <GalleryDisplay auth={auth} artworks={artworks} />
       )}
 
     </>

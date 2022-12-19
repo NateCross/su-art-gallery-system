@@ -235,7 +235,7 @@ function Dropdown({ auth }) {
           btn-ghost 
           btn-circle
           text-xl
-          focus:text-primary
+          focus:text-base-content
       ">
         { auth?.user?.avatar ? (
           <div className='avatar'>

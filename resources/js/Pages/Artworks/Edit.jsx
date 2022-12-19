@@ -20,6 +20,7 @@ export default function Edit({ auth, artwork }) {
     image: null,
     alt_text: artwork?.alt_text || '',
     date: artwork?.date || '',
+    is_nsfw: artwork?.is_nsfw || false,
     tags: artwork?.tags.map((tag) => (
       tag?.name
     )) || [],
